@@ -1,14 +1,9 @@
-#!/usr/bin/env python
-# coding: utf-8
 
 # In[ ]:
-
 
 board = [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
 
-
 # In[ ]:
-
 
 def print_state(state):
     for i, c in enumerate(state):
@@ -17,15 +12,11 @@ def print_state(state):
         else:
             print(f'{c}|', end='')
 
-
 # In[ ]:
-
 
 print_state(board)
 
-
 # In[ ]:
-
 
 winning_combinations = [(0,1,2),(3,4,5),(6,7,8),(0,3,6),(1,4,7),(2,5,8),(0,4,8),(2,4,6)]
 def get_winner(state, combinations):
@@ -34,9 +25,7 @@ def get_winner(state, combinations):
             return state[x]
     return ''
 
-
 # In[ ]:
-
 
 def play_game(board):
     current_sign = 'X'
@@ -55,17 +44,11 @@ def play_game(board):
 
 # In[ ]:
 
-
 play_game(board)
-
-
-# 
 
 # In[ ]:
 
-
 play_game(board)
-
 
 # In[ ]:
 
