@@ -2,22 +2,6 @@ from random import randint
 from internal_logic import *
 from time import sleep
 
-size_canvas_x = 600
-size_canvas_y = 600
-s_x = s_y = 6  # размер игрового поля
-s_y = 6
-step_x = size_canvas_x // s_x  # шаг по горизонтали
-step_y = size_canvas_y // s_y  # шаг по вертикали
-size_canvas_x = step_x * s_x
-size_canvas_y = step_y * s_y
-menu_x = 250
-ships = s_x // 2  # определяем максимальное кол-во кораблей
-ship_len1 = s_x // 3  # длина первого типа корабля
-ship_len2 = s_x // 2  # длина второго типа корабля
-ship_len3 = s_x // 1  # длина третьего типа корабля
-enemy_ships = [[0 for i in range(s_x + 1)] for i in range(s_y + 1)]
-list_ids = []  # список объектов canvas
-
 class Ship(object):
     def __init__(self, ship_type, cord, halo):
         self.ship_type = ship_type
