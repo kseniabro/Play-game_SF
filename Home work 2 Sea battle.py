@@ -18,6 +18,21 @@ ship_len3 = s_x // 1  # длина третьего типа корабля
 enemy_ships = [[0 for i in range(s_x + 1)] for i in range(s_y + 1)]
 list_ids = []  # список объектов canvas
 
+class Ship(object):
+    def __init__(self, ship_type, cord, halo):
+        self.ship_type = ship_type
+        self.cord = cord
+        self.halo = halo
+        self.shoots = []
+        self.state = u'Цел'
+
+    def get_state(self):
+        if len(self.shoots) == self.ship_type:
+            self.state = u'Убил!'
+        else:
+            self.state = u'Попал!'
+        return self.state
+
 class Player:
     def __init__(self, board: Board, board_other: Board):
         self.__board = board
@@ -102,65 +117,4 @@ class Game:
 
         return board
 
-    def __greet(self):
-        print("""
-        Добро пожаловать в игру "Морской бой". Игра представляет собой две доски 6х6.
-        
-        На доске размещается 7 кораблей: 
-        - один на 3 клетки, 
-        - два на 2 клетки 
-        - и четыре на 1 клетку.
-        
-        Правила простые. 
-        1) Корабли на досках размещаются автоматически, 
-        пользователю нужно вводить только 
-        координаты клетки, в которую он будет стрелять. 
-        2) Коодинаты - целые числа от 1 до 6, вводятся через пробел.
-        3) В стреляные клетки повторно стрелять нельзя.
-        4) Побеждает тот игрок, который первым уничтожит флот противника.
-        
-        Обозначения:
-        4) Х - Попадание.
-        5) Т - промах.
-        6) К - Корабль.
-        
-        Расширьте Ваше консольное окно, чтобы игровой процесс был более наглядным =)
-        """)
-
-    def __loop(self):
-        """Метод с игровым циклом."""
-
-        def loop(board: Board, player: Player, board_other: Board,
-                 player_name: str, field: str, delimiter: str):
-
-            while True:
-                sleep(2)
-                print(f"Ход {player_name}.", f"Поле {field}:", delimiter * 15, sep="\n")
-                board.print_board()
-                if player.move():
-                    board.print_board()
-                    print(delimiter * 15)
-                    if board_other.number_living_ships == 0:
-                        print(f"Игра окончера, победил {player_name}!")
-
-                        return True
-                    continue
-                else:
-                    board.print_board()
-                    print(delimiter * 15)
-                    break
-            sleep(2)
-
-        while True:
-            if loop(self.__ai.board, self.__user,
-                    self.__board_ai, "USER", "AI", "*"):
-                break
-            if loop(self.__user.board, self.__ai,
-                    self.__board_user, "AI", "USER", "-"):
-                break
-
-    def start(self):
-        """Запуск игры."""
-
-        self.__greet()
-        self.__loop()
+    
