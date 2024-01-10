@@ -65,7 +65,7 @@ class Player(object):
     def create_ships(self):
         self.ships = []
         buff_cord = []
-        ships = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
+        ships = [3, 2, 2, 1, 1, 1, 1]
         for ship in ships:
             if self.strategy.combinations[ship]:
                 cords = choice(self.strategy.combinations[ship])
