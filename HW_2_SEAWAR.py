@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 import service
 from random import choice, randint, shuffle
 from copy import copy, deepcopy
