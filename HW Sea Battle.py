@@ -26,12 +26,6 @@ class Dot:
         return self.x == other.x and self.y == other.y
 
     def __setattr__(self, key, value):
-        """
-        Переопределяем метод: проверяем корректность переданных
-        значений в конструктор.
-        Если передаем не целое число - выбрасываем исключение.
-        """
-
         if (key == "_Dot__x" or key == "_Dot__y") and type(value) != int:
             raise AttributeError
         else:
@@ -39,26 +33,12 @@ class Dot:
 
 
 class Ship:
-    """
-    Направление корабля будет "hor" или "ver".
-    Отрисовка слева-направо и сверху-вниз относительно носа (dot_bow).
-    len_ship - длина корабля.
-    dot_bow - координата носа корабля.
-    direction - направление ("hor" или "ver").
-    volume - кол-во жизней, изначально равно длине корабля.
-    """
-
     def __init__(self, len_ship: int, dot_bow: Dot, direction: str):
         self.__len_ship = len_ship
         self.__dot_bow = dot_bow
         self.__direction = direction
         self.__volume = len_ship
-
     def dots(self):
-        """
-        Список всех точек корабля.
-        """
-
         if self.__direction == "ver":
             return [Dot(self.__dot_bow.x + i, self.__dot_bow.y) for i in range(0, self.__len_ship)]
         elif self.__direction == "hor":
@@ -87,11 +67,6 @@ class Ship:
         self.__volume = new_volume
 
     def __setattr__(self, key, value):
-        """
-        Переопределяем метод: проверяем корректность переданных
-        значений (длина и тип корабля) в конструктор.
-        """
-
         if key == "_Ship__len_ship" and (not (1 <= value <= 3) or type(value) != int):
             raise AttributeError
         elif key == "_Ship__direction" and value not in ["hor", "ver"]:
@@ -102,13 +77,6 @@ class Ship:
 
 class Board:
     def __init__(self, hid=True):
-        """
-        __board_list - двумерный список, в котором хранятся состояния каждой из клеток.
-        __list_ship - список кораблей доски.
-        __hid - информация о том, нужно ли скрывать корабли на доске.
-        __number_living_ships - количество живых кораблей на доске.
-        """
-
         self.__board_list = [["o" for i in range(6)] for j in range(6)]
         self.__list_ship = []
         self.__hid = hid
@@ -123,42 +91,23 @@ class Board:
         return self.__list_ship
 
     def __chek_position_ship(self, ship: Ship):
-        # Выходит ли за границы доски?
         for dot in ship.dots():
             if self.__out(dot):
                 raise BoardOutException
-
-        # Расстояние между кораблями >=1 клетки?
         for ship_on_board in self.__list_ship:
             for dot in ship.dots():
                 if dot in self.__contour(ship_on_board):
                     raise ShipPositionException
-
         return True
 
     def add_ship(self, ship: Ship):
-        """
-        Ставит корабль на доску (если ставить не получается, выбрасываем исключения).
-        """
-
         if self.__chek_position_ship(ship):
-            # Пополняем список кораблей доски
             self.__list_ship.append(ship)
-            # и кол-во живых кораблей.
             self.__number_living_ships += 1
-
             for dot in ship.dots():
-                # Меняем состояние клеток доски в соответствии точками корабля.
                 self.__board_list[dot.x-1][dot.y-1] = "K"
 
     def __contour(self, ship: Ship):
-        """
-        Обводит корабль по контуру:
-        помечает соседние точки, где корабля по правилам быть не может).
-        """
-
-        # Идея вернуть список точек корабля и вокруг корабля,
-        # даже которые за границами доски, чтобы проще было.
         dot_in_comtour = []
         dot_in_comtour.extend(ship.dots())
 
@@ -167,29 +116,19 @@ class Board:
         len_ship = ship.len_ship
 
         if ship.direction == "ver":
-            # Зона слева от корабля.
             dot_in_comtour.extend([Dot(x+i, y-1) for i in range(0, len_ship)])
-            # Зона справа от корабля.
             dot_in_comtour.extend([Dot(x+i, y+1) for i in range(0, len_ship)])
-            # Зона над кораблем.
             dot_in_comtour.extend([Dot(x-1, y), Dot(x-1, y-1), Dot(x-1, y+1)])
-            # Зона под кораблем.
             dot_in_comtour.extend([Dot(x+len_ship, y), Dot(x+len_ship, y-1), Dot(x+len_ship, y+1)])
         elif ship.direction == "hor":
-            # Зона под кораблем.
             dot_in_comtour.extend([Dot(x+1, y+i) for i in range(0, len_ship)])
-            # Зона над кораблем.
             dot_in_comtour.extend([Dot(x-1, y+i) for i in range(0, len_ship)])
-            # Зона слева от корабля.
             dot_in_comtour.extend([Dot(x, y-1), Dot(x-1, y-1), Dot(x+1, y-1)])
-            # Зона справа от корабля.
             dot_in_comtour.extend([Dot(x, y+len_ship), Dot(x+1, y+len_ship), Dot(x-1, y+len_ship)])
 
         return dot_in_comtour
 
     def print_board(self):
-        """Выводит доску в консоль в зависимости от параметра hid."""
-
         string = '{:^2}' * 7
         print(string.format('', *range(1, 7)))
 
@@ -201,28 +140,14 @@ class Board:
                 print(string.format(num_row + 1, *cell))
 
     def __out(self, dot: Dot):
-        """
-        Для точки (объекта класса Dot) возвращает True,
-        если точка выходит за пределы поля, и False, если не выходит.
-        """
-
         if 1<=dot.x<=6 and 1<=dot.y<=6:
             return False
-
         return True
 
     def shot(self, dot: Dot):
-        """
-        Делает выстрел по доске
-        (если есть попытка выстрелить за пределы и в использованную точку,
-        нужно выбрасывать исключения).
-        """
-
-        # За пределы.
         if self.__out(dot):
             raise BoardOutException
 
-        # В использованную точку.
         if self.__board_list[dot.x-1][dot.y-1] in ["X", "T"]:
             raise RetryException
 
@@ -239,11 +164,10 @@ class Board:
         if flag:
             self.__board_list[dot.x-1][dot.y-1] = "X"
             print("Попадание!")
-            # Вернем True, если попали.
             return True
         else:
             self.__board_list[dot.x-1][dot.y-1] = "T"
-            print("Промах!")
+            print("Мимо")
 
 class Player:
     def __init__(self, board: Board, board_other: Board):
@@ -263,16 +187,16 @@ class Player:
             if self.__board_other.shot(Dot(koords[0], koords[1])):
                 return True
         except AttributeError:
-            print("Некорректный ввод. Координата - это два целых цисла от 1 до 6, разделенных пробелом!")
+            print("Некорректный ввод")
             return True
         except BoardOutException:
-            print("Введенная координата находится за пределами доски!")
+            print("Выстрел за пределами доски")
             return True
         except RetryException:
-            print("По этой точке уже стреляли!")
+            print("По этой точке уже стреляли")
             return True
         except ValueError:
-            print("Некорректный ввод. Координата - это два целых цисла от 1 до 6, разделенных пробелом!")
+            print("Некорректный ввод")
             return True
 
         return False
@@ -280,15 +204,12 @@ class Player:
 
 class AI(Player):
     def _ask(self):
-        # Выбор случайной точки.
-
         return randint(1, 6), randint(1, 6)
 
 
 class User(Player):
     def _ask(self):
         x, y = list(map(int, input("Введите координаты точки x и y через пробел: ").split()))
-
         return x, y
 
 
@@ -301,22 +222,13 @@ class Game:
 
     @staticmethod
     def random_board(hid=True):
-        """
-        Метод генерирует случайную доску.
-        Закладываю 5 повторов (repeat) на добавление кораблей каждого типа.
-        Если за 5 повторов не удается расположить корабли - начинаем снова формировать доску.
-        """
-
         while True:
             board = Board(hid)
             direction = ["hor", "ver"]
-            # Требуемое кол-во кораблей каждого типа.
-            required_number_ships_type = [(3, 1), (2, 2), (1, 4)]  # (3,1) - 3хпалубный корабль в количетсве 1шт
-
+            required_number_ships_type = [(3, 1), (2, 2), (1, 4)] 
             for type in required_number_ships_type:
                 flag = False
                 repeat = 0
-                # Текущее кол-во кораблей каждого типа.
                 current_number_ships = 0
 
                 while current_number_ships != type[1]:
@@ -334,6 +246,23 @@ class Game:
                 break
 
         return board
+
+class BoardOutException(Exception):
+    pass
+
+class ShipPositionException(Exception):
+    pass
+
+class RetryException(Exception):
+    passclass BoardOutException(Exception):
+    pass
+
+class ShipPositionException(Exception):
+    pass
+
+class RetryException(Exception):
+    pass
+
 
     def __greet(self):
         print("""
@@ -356,13 +285,10 @@ class Game:
         4) Х - Попадание.
         5) Т - промах.
         6) К - Корабль.
-        
-        Расширьте Ваше консольное окно, чтобы игровой процесс был более наглядным =)
+    
         """)
 
     def __loop(self):
-        """Метод с игровым циклом."""
-
         def loop(board: Board, player: Player, board_other: Board,
                  player_name: str, field: str, delimiter: str):
 
@@ -393,36 +319,9 @@ class Game:
                 break
 
     def start(self):
-        """Запуск игры."""
 
         self.__greet()
         self.__loop()
-
-class BoardOutException(Exception):
-    """Выход точки за пределы поля."""
-    pass
-
-
-class ShipPositionException(Exception):
-    """Когда неправильно располагаем корабль на доске."""
-    pass
-
-
-class RetryException(Exception):
-    """При попытке выстрелить в использованную точку."""
-    passclass BoardOutException(Exception):
-    """Выход точки за пределы поля."""
-    pass
-
-
-class ShipPositionException(Exception):
-    """Когда неправильно располагаем корабль на доске."""
-    pass
-
-
-class RetryException(Exception):
-    """При попытке выстрелить в использованную точку."""
-    pass
 
 
 
