@@ -1,271 +1,224 @@
 from random import randint
+from time import sleep
 
-board_ai = Game.random_board()
-board_user = Game.random_board(hid=False)
 
-user = User(board_user, board_ai)
-ai = AI(board_ai, board_user)
+# Размер игровой доски
+BOARD_SIZE = 6
+# Длины / количество палуб всех кораблей в порядке убывания
+SHIPS_TYPES = [3, 2, 2, 1, 1, 1, 1]
 
-game = Game(user, ai)
-game.start()
 
-class Dot:
-    def __init__(self, x: int, y: int):
-        self.__x = x
-        self.__y = y
+class BoardException(Exception):
+    pass
 
-    @property
-    def x(self):
-        return self.__x
+class BoardOutException(BoardException):
+    def __str__(self) -> str:
+        return '\n\tЭта точка за пределами игровой доски!\n'
 
-    @property
-    def y(self):
-        return self.__y
+class BoardUsedException(BoardException):
+    def __str__(self) -> str:
+        return '\n\tВы уже стреляли в эту точку!\n'
 
-    def __eq__(self, other):
+class BoardWrongShipException(BoardException):
+    pass
+
+class Dot():
+    def __init__(self, x: int, y: int) -> None:
+        self.x = x
+        self.y = y
+
+    def __eq__(self, other: 'Dot') -> bool:
         return self.x == other.x and self.y == other.y
 
-    def __setattr__(self, key, value):
-        if (key == "_Dot__x" or key == "_Dot__y") and type(value) != int:
-            raise AttributeError
+class Ship():
+    def __init__(self, length: int, bow: Dot, direction: int) -> None:
+        self.length = length
+        self.bow = bow
+        self.direction = direction
+        self.lives = length
+
+    @property
+    def dots(self) -> list[Dot]:
+        dot_list = list()
+        for i in range(self.length):
+            x, y = self.bow.x, self.bow.y
+            if self.direction == 0:
+                x += i
+            elif self.direction == 1:
+                y += i
+            dot_list.append(Dot(x, y))
+        return dot_list
+
+    def is_strike(self, dot: Dot) -> bool:
+        return dot in self.dots
+
+class Board():
+    _is_hidden: bool = False
+    
+    def __init__(self) -> None:
+        self.table = [['○'] * BOARD_SIZE for _ in range(BOARD_SIZE)]
+        self.ships = list()
+        self.locked_dots = list()
+        self.live_ships = len(SHIPS_TYPES)
+
+    @property
+    def is_hidden(self) -> bool:
+        return self._is_hidden
+
+    @is_hidden.setter
+    def is_hidden(self, value: bool) -> None:
+        if isinstance(value, bool):
+            self._is_hidden = value
         else:
-            super().__setattr__(key, value)
+            raise ValueError('Параметр is_hidden должен быть True или False.')
 
+    def add_ship(self, ship: Ship) -> None:
+        for dot in ship.dots:
+            if Board.out(dot) or dot in self.locked_dots:
+                raise BoardWrongShipException()
+        for dot in ship.dots:
+            self.table[dot.x][dot.y] = '■'
+            self.locked_dots.append(dot)
+        self.ships.append(ship)
+        self.mark_oreol(ship)
 
-class Ship:
-    def __init__(self, len_ship: int, dot_bow: Dot, direction: str):
-        self.__len_ship = len_ship
-        self.__dot_bow = dot_bow
-        self.__direction = direction
-        self.__volume = len_ship
-    def dots(self):
-        if self.__direction == "ver":
-            return [Dot(self.__dot_bow.x + i, self.__dot_bow.y) for i in range(0, self.__len_ship)]
-        elif self.__direction == "hor":
-            return [Dot(self.__dot_bow.x, self.__dot_bow.y + j) for j in range(0, self.__len_ship)]
-        else:
-            pass
+    def mark_oreol(self, ship: Ship, is_game: bool = False) -> None:
+        neighbours = [(-1, -1), (0, -1), (1, -1), (-1, 0),
+                      (1, 0), (-1, 1), (0, 1), (1, 1)]
+        for dot in ship.dots:
+            for dx, dy in neighbours:
+                x, y = dot.x + dx, dot.y + dy
+                current_dot = Dot(x, y)
+                if (not Board.out(current_dot)) and \
+                   (current_dot not in self.locked_dots):
+                    self.locked_dots.append(current_dot)
+                    if is_game:
+                        self.table[x][y] = '•'
 
-    @property
-    def len_ship(self):
-        return self.__len_ship
-
-    @property
-    def dot_bow(self):
-        return self.__dot_bow
-
-    @property
-    def direction(self):
-        return self.__direction
-
-    @property
-    def volume(self):
-        return self.__volume
-
-    @volume.setter
-    def volume(self, new_volume):
-        self.__volume = new_volume
-
-    def __setattr__(self, key, value):
-        if key == "_Ship__len_ship" and (not (1 <= value <= 3) or type(value) != int):
-            raise AttributeError
-        elif key == "_Ship__direction" and value not in ["hor", "ver"]:
-            raise AttributeError
-        else:
-            super().__setattr__(key, value)
-
-
-class Board:
-    def __init__(self, hid=True):
-        self.__board_list = [["o" for i in range(6)] for j in range(6)]
-        self.__list_ship = []
-        self.__hid = hid
-        self.__number_living_ships = 0
-
-    @property
-    def number_living_ships(self):
-        return self.__number_living_ships
-
-    @property
-    def list_ship(self):
-        return self.__list_ship
-
-    def __chek_position_ship(self, ship: Ship):
-        for dot in ship.dots():
-            if self.__out(dot):
-                raise BoardOutException
-        for ship_on_board in self.__list_ship:
-            for dot in ship.dots():
-                if dot in self.__contour(ship_on_board):
-                    raise ShipPositionException
-        return True
-
-    def add_ship(self, ship: Ship):
-        if self.__chek_position_ship(ship):
-            self.__list_ship.append(ship)
-            self.__number_living_ships += 1
-            for dot in ship.dots():
-                self.__board_list[dot.x-1][dot.y-1] = "K"
-
-    def __contour(self, ship: Ship):
-        dot_in_comtour = []
-        dot_in_comtour.extend(ship.dots())
-
-        x = ship.dot_bow.x
-        y = ship.dot_bow.y
-        len_ship = ship.len_ship
-
-        if ship.direction == "ver":
-            dot_in_comtour.extend([Dot(x+i, y-1) for i in range(0, len_ship)])
-            dot_in_comtour.extend([Dot(x+i, y+1) for i in range(0, len_ship)])
-            dot_in_comtour.extend([Dot(x-1, y), Dot(x-1, y-1), Dot(x-1, y+1)])
-            dot_in_comtour.extend([Dot(x+len_ship, y), Dot(x+len_ship, y-1), Dot(x+len_ship, y+1)])
-        elif ship.direction == "hor":
-            dot_in_comtour.extend([Dot(x+1, y+i) for i in range(0, len_ship)])
-            dot_in_comtour.extend([Dot(x-1, y+i) for i in range(0, len_ship)])
-            dot_in_comtour.extend([Dot(x, y-1), Dot(x-1, y-1), Dot(x+1, y-1)])
-            dot_in_comtour.extend([Dot(x, y+len_ship), Dot(x+1, y+len_ship), Dot(x-1, y+len_ship)])
-
-        return dot_in_comtour
-
-    def print_board(self):
-        string = '{:^2}' * 7
-        print(string.format('', *range(1, 7)))
-
-        for num_row, cell in enumerate(self.__board_list):
-            if not self.__hid:
-                print(string.format(num_row + 1, *cell))
-            else:
-                cell = "".join(cell).replace("K", "o")
-                print(string.format(num_row + 1, *cell))
-
-    def __out(self, dot: Dot):
-        if 1<=dot.x<=6 and 1<=dot.y<=6:
-            return False
-        return True
-
-    def shot(self, dot: Dot):
-        if self.__out(dot):
-            raise BoardOutException
-
-        if self.__board_list[dot.x-1][dot.y-1] in ["X", "T"]:
-            raise RetryException
-
-        flag = False
-
-        for ship in self.__list_ship:
-            for dot_ship in ship.dots():
-                if dot == dot_ship:
-                    flag = True
-                    ship.volume -= 1
-                    if ship.volume == 0:
-                        self.__number_living_ships -= 1
-                    break
-        if flag:
-            self.__board_list[dot.x-1][dot.y-1] = "X"
-            print("Попадание!")
-            return True
-        else:
-            self.__board_list[dot.x-1][dot.y-1] = "T"
-            print("Мимо")
-
-class Player:
-    def __init__(self, board: Board, board_other: Board):
-        self.__board = board
-        self.__board_other = board_other
-
-    @property
-    def board(self):
-        return self.__board
-
-    def _ask(self):
-        pass
-
-    def move(self):
-        try:
-            koords = self._ask()
-            if self.__board_other.shot(Dot(koords[0], koords[1])):
-                return True
-        except AttributeError:
-            print("Некорректный ввод")
-            return True
-        except BoardOutException:
-            print("Выстрел за пределами доски")
-            return True
-        except RetryException:
-            print("По этой точке уже стреляли")
-            return True
-        except ValueError:
-            print("Некорректный ввод")
-            return True
-
-        return False
-
-
-class AI(Player):
-    def _ask(self):
-        return randint(1, 6), randint(1, 6)
-
-
-class User(Player):
-    def _ask(self):
-        x, y = list(map(int, input("Введите координаты точки x и y через пробел: ").split()))
-        return x, y
-
-
-class Game:
-    def __init__(self, user: User, ai: AI):
-        self.__user = user
-        self.__board_user = user.board
-        self.__ai = ai
-        self.__board_ai = ai.board
+    def show(self) -> None:
+        print(' X| 1 2 3 4 5 6')
+        print('Y◢ ____________')
+        for row in range(BOARD_SIZE):
+            print(row + 1, end=' | ')
+            for col in range(BOARD_SIZE):
+                cell = self.table[col][row]
+                if self.is_hidden:
+                    print('○', end=' ') if cell == '■' else print(cell, end=' ')
+                else:
+                    print(cell, end=' ')
+            print('')
+        print('\n')
 
     @staticmethod
-    def random_board(hid=True):
+    def out(dot: Dot) -> bool:
+        return not (0 <= dot.x < BOARD_SIZE and 0 <= dot.y < BOARD_SIZE)
+
+    def shot(self, dot: Dot) -> bool:
+        if Board.out(dot):
+            raise BoardOutException
+        if dot in self.locked_dots:
+            raise BoardUsedException
+        self.locked_dots.append(dot)
+        for ship in self.ships:
+            if ship.is_strike(dot):
+                ship.lives -= 1
+                self.table[dot.x][dot.y] = '×'
+                if ship.lives == 0:
+                    self.live_ships -= 1
+                    self.mark_oreol(ship, is_game=True)
+                    print('\n\tКорабль потоплен!')
+                    sleep(1)
+                    return True
+                else:
+                    print('\n\tПопадание!')
+                    sleep(1)
+                    return True
+        self.table[dot.x][dot.y] = '•'
+        print('\n\tМимо.')
+        sleep(1)
+        return False
+
+    def get_ready(self) -> None:
+        self.locked_dots = list()
+
+    def is_loser(self) -> bool:
+        return self.live_ships == 0
+
+class Player():
+    def __init__(self, own_board: Board, opponent_board: Board) -> None:
+        self.own_board = own_board
+        self.opponent_board = opponent_board
+
+    def ask(self):
+        raise NotImplementedError(f'Определите ask в {self.__class__.__name__}.')
+
+    def move(self) -> bool:
         while True:
-            board = Board(hid)
-            direction = ["hor", "ver"]
-            required_number_ships_type = [(3, 1), (2, 2), (1, 4)] 
-            for type in required_number_ships_type:
-                flag = False
-                repeat = 0
-                current_number_ships = 0
+            try:
+                return self.opponent_board.shot(self.ask())
+            except ValueError:
+                print('\n\tВнимательнее, вводите две цифры через пробел.\n')
+                sleep(1)
+            except BoardException as e:
+                print(e)
+                sleep(1)
 
-                while current_number_ships != type[1]:
-                    try:
-                        board.add_ship(Ship(type[0], Dot(randint(1, 6), randint(1, 6)), direction[randint(0, 1)]))
-                        current_number_ships = len(list(filter(lambda x: x.len_ship == type[0], board.list_ship)))
-                    except (BoardOutException, ShipPositionException):
-                        repeat += 1
-                        if repeat == 5 and len(board.list_ship) != 7:
-                            flag = True
-                            break
-                if flag:
-                    break
-            if len(board.list_ship) == 7:
-                break
+class AI(Player):
+    def ask(self) -> Dot:
+        x, y = randint(1, BOARD_SIZE), randint(1, BOARD_SIZE)
+        print(f'x y = {x} {y}')
+        sleep(1)
+        return Dot(x - 1, y - 1)
 
+class User(Player):
+    def ask(self) -> Dot:
+        x, y = input('x y = ').strip().split()
+        if x and y:
+            return Dot(int(x) - 1, int(y) - 1)
+        else:
+            raise ValueError
+
+
+class Game():
+    def __init__(self) -> None:
+        self.user_board = self.make_board()
+        self.ai_board = self.make_board()
+        self.ai_board.is_hidden = True
+        self.user = User(self.user_board, self.ai_board)
+        self.ai = AI(self.ai_board, self.user_board)
+
+    def make_board(self) -> Board:
+        board = None
+        while board is None:
+            board = Game.random_board()
+        board.get_ready()
         return board
 
-class BoardOutException(Exception):
-    pass
+    @staticmethod
+    def random_board() -> Board:
+        board = Board()
+        attempts = 0
+        for length in SHIPS_TYPES:
+            while True:
+                if attempts > 2000:
+                    return None
+                try:
+                    board.add_ship(Ship(length,
+                                        Dot(randint(0, BOARD_SIZE-1),
+                                            randint(0, BOARD_SIZE-1)
+                                            ),
+                                        randint(0, 1)
+                                        )
+                                   )
+                    break
+                except BoardWrongShipException:
+                    pass
+                attempts += 1
+        return board
 
-class ShipPositionException(Exception):
-    pass
-
-class RetryException(Exception):
-    passclass BoardOutException(Exception):
-    pass
-
-class ShipPositionException(Exception):
-    pass
-
-class RetryException(Exception):
-    pass
-
-
-    def __greet(self):
-        print("""
+    @staticmethod
+    def greet() -> None:
+        text = """
         Добро пожаловать в игру "Морской бой". Игра представляет собой поле 6х6.
         
         На поле размещается 7 кораблей: 
@@ -279,48 +232,54 @@ class RetryException(Exception):
         2) Коодинаты - целые числа от 1 до 6, вводятся через пробел.
         3) В клетки повторно стрелять нельзя.
         4) Побеждает тот игрок, который первым уничтожит флот противника.
+        """
         
+        marks = """
         Обозначения:
-        4) Х - Попадание.
-        5) Т - промах.
-        6) К - Корабль.
-    
-        """)
+            ■ - палуба
+            • - мимо / ореол корабля
+            ○ - море
+            × - попадание
+        """
+        print(text)
+        print(marks)
+        input('\n\tНажмите -= Enter =- для старта')
 
-    def __loop(self):
-        def loop(board: Board, player: Player, board_other: Board,
-                 player_name: str, field: str, delimiter: str):
+    def show_boards(self) -> None:
+        print('\n\n\n' + '-' * 50)
+        print('Доска пользователя:\n')
+        self.user.own_board.show()
+        print('Доска компьютера:\n')
+        self.ai.own_board.show()
 
-            while True:
-                sleep(2)
-                print(f"Ход {player_name}.", f"Поле {field}:", delimiter * 15, sep="\n")
-                board.print_board()
-                if player.move():
-                    board.print_board()
-                    print(delimiter * 15)
-                    if board_other.number_living_ships == 0:
-                        print(f"Игра окончера, победил {player_name}!")
-
-                        return True
-                    continue
-                else:
-                    board.print_board()
-                    print(delimiter * 15)
-                    break
-            sleep(2)
-
+    def loop(self) -> None:
+        player = 0
         while True:
-            if loop(self.__ai.board, self.__user,
-                    self.__board_ai, "USER", "AI", "*"):
+            self.show_boards()
+            if player % 2 == 0:
+                print('Ваш ход:')
+                repeat = self.user.move()
+            else:
+                print('Ходит компьютер:')
+                repeat = self.ai.move()
+            player += 0 if repeat else 1
+            if self.ai.own_board.is_loser():
+                print('\n\n\n' + '-' * 50 + '\n\n\n')
+                print('#' * 22 + '\n#    Вы выиграли!    #\n' + '#' * 22)
+                self.show_boards()
                 break
-            if loop(self.__user.board, self.__ai,
-                    self.__board_user, "AI", "USER", "-"):
+            if self.user.own_board.is_loser():
+                print('\n\n\n' + '-' * 50 + '\n\n\n')
+                print('#' * 22 + '\n# Компьютер выиграл! #\n' + '#' * 22)
+                self.show_boards()
                 break
 
-    def start(self):
-
-        self.__greet()
-        self.__loop()
-
+    def start(self) -> None:
+        Game.greet()
+        self.loop()
 
 
+if __name__ == '__main__':
+    game = Game()
+    game.start()
+    
