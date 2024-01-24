@@ -29,7 +29,7 @@ def valuess(message):
 
 
 @bot.message_handler(content_types=['text'])
-def converter(message: telebot.types.Message):
+def get_price(message: telebot.types.Message):
     try:
         val = message.text.split(' ')
 
@@ -37,7 +37,7 @@ def converter(message: telebot.types.Message):
             raise APIException('Слишком много или слишком мало параметров')
 
         quote, base, amount = val
-        total_base = CryptoConverter.converter(quote, base, amount)
+        total_base = CryptoConverter.get_price(quote, base, amount)
     except APIException as e:
         bot.reply_to(message, f'Ошибка пользователя.\n {e}')
     except Exception as e:
