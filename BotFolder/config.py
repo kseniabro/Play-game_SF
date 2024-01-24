@@ -1,6 +1,6 @@
 
 TOKEN = '5992525631:AAEXCw3Z2pVKoDf2bBGkGUTO9Q8pGNiVQf0'
-keys = {
+values = {
     'биткоин': 'BTC',
     'эфириум': 'ETN',
     'доллар': 'USD',
