@@ -1,4 +1,4 @@
-import telebot
+erimport telebot
 from config import values, TOKEN, start, help
 from utils import APIException, CryptoConverter
 
