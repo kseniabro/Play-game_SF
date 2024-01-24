@@ -1,6 +1,6 @@
 import telebot
-from config import keys, TOKEN, start, help
-from utils import ConvertationException, CryptoConverter
+from config import values, TOKEN, start, help
+from utils import APIException, CryptoConverter
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -20,30 +20,30 @@ def helpp(message):
     bot.send_message(message.chat.id, help + '\n /menu')
 
 
-@bot.message_handler(commands=['keys'])
-def keyss(message):
+@bot.message_handler(commands=['values'])
+def valuess(message):
     bot.send_message(message.chat.id, 'ДОСТУПНЫ СЛЕДУЮЩИЕ ВАЛЮТЫ:')
-    for i in keys:
-        bot.send_message(message.chat.id, i + ' ' + keys[i])
+    for i in values:
+        bot.send_message(message.chat.id, i + ' ' + values[i])
     bot.send_message(message.chat.id, '/menu')
 
 
 @bot.message_handler(content_types=['text'])
 def converter(message: telebot.types.Message):
     try:
-        values = message.text.split(' ')
+        val = message.text.split(' ')
 
-        if len(values) != 3:
+        if len(val) != 3:
             raise ConvertationException('Слишком много или слишком мало параметров')
 
-        quote, base, amount = values
+        quote, base, amount = val
         total_base = CryptoConverter.converter(quote, base, amount)
     except ConvertationException as e:
         bot.reply_to(message, f'Ошибка пользователя.\n {e}')
     except Exception as e:
         bot.reply_to(message, f'Не удалось обработать команду.\n {e}')
     else:
-        text = f'{amount} {keys[base]}({base}) в {keys[quote]}({quote}) равно: {total_base}'
+        text = f'{amount} {values[base]}({base}) в {values[quote]}({quote}) равно: {total_base}'
         bot.send_message(message.chat.id, text)
         bot.send_message(message.chat.id, "/menu")
 
