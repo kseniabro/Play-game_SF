@@ -1,4 +1,4 @@
-erimport telebot
+import telebot
 from config import values, TOKEN, start, help
 from utils import APIException, CryptoConverter
 
@@ -29,7 +29,7 @@ def valuess(message):
 
 
 @bot.message_handler(content_types=['text'])
-def get_price(message: telebot.types.Message):
+def converter(message: telebot.types.Message):
     try:
         val = message.text.split(' ')
 
