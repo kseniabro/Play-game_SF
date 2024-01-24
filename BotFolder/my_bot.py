@@ -34,11 +34,11 @@ def converter(message: telebot.types.Message):
         val = message.text.split(' ')
 
         if len(val) != 3:
-            raise ConvertationException('Слишком много или слишком мало параметров')
+            raise APIException('Слишком много или слишком мало параметров')
 
         quote, base, amount = val
         total_base = CryptoConverter.converter(quote, base, amount)
-    except ConvertationException as e:
+    except APIException as e:
         bot.reply_to(message, f'Ошибка пользователя.\n {e}')
     except Exception as e:
         bot.reply_to(message, f'Не удалось обработать команду.\n {e}')
