@@ -1,0 +1,32 @@
+﻿{% load i18n %}
+{% load app_users_templatetags %}
+
+<nav>
+    <ul class="nav-list">
+        {% url 'main_view' as main_path %}
+        {% if main_path != request.path %}
+            {% trans 'На главную страницу' as to_main_page_trans %}
+            <li class="nav-list__item"><a href="{{ main_path }}" aria-label="{{ to_main_page_trans }}" title="{{ to_main_page_trans }}">{{ to_main_page_trans }}</a>
+        {% endif %}
+
+        {% url 'app_news:news_list' as news_list_path %}
+        {% if news_list_path != request.path %}
+            {% trans 'Все новости' as all_news_trans %}
+            <li class="nav-list__item"><a href="{{ news_list_path }}" aria-label="{{ all_news_trans }}" title="{{ all_news_trans }}">{{ all_news_trans }}</a>
+        {% endif %}
+
+        {% url 'app_news:news_create' as create_news_path %}
+        {% if create_news_path != request.path and request.user.profile.is_verified%}
+            {% trans 'Создать новостную сводку' as create_news_trans %}
+            <li class="nav-list__item"><a href="{{ create_news_path }}" aria-label="{{ create_news_trans }}" title="{{ create_news_trans }}">{{ create_news_trans }}</a>
+        {% endif %}
+
+        {% if request.user|is_moderator%}
+                {% if top_menu_flag %}
+                    {% include 'project_modules/templates_for_include/moderator_submenu_links_list.html' with nav_list_submenu='submenu_header' nav_list_submenu_item='submenu__item_color' %}
+                {% else %}
+                    {% include 'project_modules/templates_for_include/moderator_submenu_links_list.html' with nav_list_submenu='submenu_footer' nav_list_submenu_item='submenu__item_color_white' nav_list__item_moderator='nav-list__item_moderator_white'%}
+                {% endif %}
+        {% endif %}
+    </ul>
+</nav>

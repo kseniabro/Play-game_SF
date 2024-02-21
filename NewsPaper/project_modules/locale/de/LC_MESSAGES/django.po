@@ -1,0 +1,707 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-09-11 23:11+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\app_news\admin.py:38
+msgid "Активировать выбранные новости"
+msgstr "Ausgewählte Nachrichten aktivieren"
+
+#: .\app_news\admin.py:39
+msgid "Деактивировать выбранные новости"
+msgstr "Ausgewählte Nachrichten deaktivieren"
+
+#: .\app_news\admin.py:55
+msgid "Комментарий удален администратором"
+msgstr "Kommentar vom Administrator gelöscht"
+
+#: .\app_news\admin.py:65
+msgid "Модерировать выбранные комментарии"
+msgstr "Ausgewählte Kommentare moderieren"
+
+#: .\app_news\admin.py:66 .\app_news\models.py:58 .\app_news\models.py:66
+msgid "Комментарий"
+msgstr "Ein Kommentar"
+
+#: .\app_news\apps.py:7 .\app_news\models.py:29
+msgid "Новости"
+msgstr "Nachrichten"
+
+#: .\app_news\forms.py:19
+msgid "Введите название новости"
+msgstr "Geben Sie den Namen der Nachricht ein"
+
+#: .\app_news\forms.py:23 .\app_news\forms.py:66 .\app_news\forms.py:67
+msgid "Введите комментарий"
+msgstr "Geben Sie einen Kommentar ein"
+
+#: .\app_news\forms.py:39 .\app_news\forms.py:40
+msgid "Поменять статус публикации"
+msgstr "Veröffentlichungsstatus ändern"
+
+#: .\app_news\forms.py:61 .\app_news\forms.py:62
+msgid "Введите свое имя"
+msgstr "Geben Sie Ihren Namen ein"
+
+#: .\app_news\forms.py:76
+msgid "Необходимо ввести имя пользователя"
+msgstr "Sie müssen einen Benutzernamen eingeben"
+
+#: .\app_news\models.py:16 .\app_news\models.py:48 .\app_users\models.py:15
+msgid "Пользователь"
+msgstr "Benutzer"
+
+#: .\app_news\models.py:19
+msgid "Название"
+msgstr "Titel"
+
+#: .\app_news\models.py:20
+msgid "Содержание"
+msgstr "Der Inhalt"
+
+#: .\app_news\models.py:21 .\app_news\models.py:63
+#: .\app_news\templates\app_news\templates_for_include\news_content.html:10
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:24
+msgid "Дата создания"
+msgstr "Erstellungsdatum"
+
+#: .\app_news\models.py:22 .\app_news\templates\app_news\news_detail.html:39
+#: .\app_news\templates\app_news\templates_for_include\news_content.html:8
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:22
+msgid "Дата публикации"
+msgstr "Datum der Veröffentlichung"
+
+#: .\app_news\models.py:23
+#: .\app_news\templates\app_news\templates_for_include\news_content.html:13
+msgid "Дата редактирования"
+msgstr "Datum der Bearbeitung"
+
+#: .\app_news\models.py:24
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:41
+msgid "Статус публикации"
+msgstr "Veröffentlichungsstatus"
+
+#: .\app_news\models.py:28 .\app_news\models.py:61
+#: .\app_news\templates\app_news\personal_news_list.html:11
+msgid "Новость"
+msgstr "Nachricht"
+
+#: .\app_news\models.py:32
+msgid "Может публиковать новости"
+msgstr "Kann Nachrichten veröffentlichen"
+
+#: .\app_news\models.py:53 .\app_users\templates\app_users\profile.html:26
+#: .\app_users\templates\app_users\user_moderation.html:15
+#: .\app_users\templates\app_users\users_list_moderation.html:23
+msgid "Имя пользователя"
+msgstr "Benutzername"
+
+#: .\app_news\models.py:67 .\app_news\templates\app_news\news_detail.html:32
+msgid "Комментарии"
+msgstr "Kommentare"
+
+#: .\app_news\models.py:82
+msgid "{} (аноним)"
+msgstr "{} (Anonymus)"
+
+#: .\app_news\templates\app_news\news_create.html:5
+#: .\app_news\templates\app_news\news_create.html:9
+#: .\app_users\templates\app_users\profile.html:53
+#: .\project_modules\templates\project_modules\templates_for_include\nav_by_site.html:20
+msgid "Создать новостную сводку"
+msgstr "Nachrichtenübersicht erstellen"
+
+#: .\app_news\templates\app_news\news_detail.html:7
+msgid "Детальная информация о новости"
+msgstr "Detaillierte Informationen über News"
+
+#: .\app_news\templates\app_news\news_detail.html:16
+#: .\app_news\templates\app_news\news_update.html:7
+#: .\app_news\templates\app_news\news_update.html:11
+msgid "Редактировать новость"
+msgstr "Nachrichten bearbeiten"
+
+#: .\app_news\templates\app_news\news_detail.html:20
+#: .\app_news\templates\app_news\news_update.html:48
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:33
+msgid "Удалить новость"
+msgstr "Nachrichten löschen"
+
+#: .\app_news\templates\app_news\news_detail.html:25
+#: .\app_news\templates\app_news\news_moderation.html:5
+#: .\app_news\templates\app_news\news_moderation.html:9
+#: .\app_news\templates\app_news\news_update.html:38
+msgid "Модерация новости"
+msgstr "Moderation der Nachrichten"
+
+#: .\app_news\templates\app_news\news_detail.html:37
+#: .\app_news\templates\app_news\templates_for_include\news_content.html:17
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:18
+msgid "Автор"
+msgstr "Der Autor"
+
+#: .\app_news\templates\app_news\news_detail.html:44
+msgid "Комментариев пока что нету, вы можете стать первым"
+msgstr "Es gibt noch keine Kommentare, Sie können der erste sein"
+
+#: .\app_news\templates\app_news\news_detail.html:49
+msgid "Добавить комментарий"
+msgstr "Kommentar hinzufügen"
+
+#: .\app_news\templates\app_news\news_detail.html:72
+msgid "Опубликовать комментарий"
+msgstr "Kommentar posten"
+
+#: .\app_news\templates\app_news\news_list.html:5
+msgid "Все новости со всех концов света"
+msgstr "Alle Neuigkeiten aus aller Welt"
+
+#: .\app_news\templates\app_news\news_list.html:9
+#: .\project_modules\templates\project_modules\templates_for_include\nav_by_site.html:14
+msgid "Все новости"
+msgstr "Alle Neuigkeiten"
+
+#: .\app_news\templates\app_news\news_list_moderation.html:7
+#: .\app_users\templates\app_users\main_moderation.html:14
+#: .\project_modules\templates\project_modules\templates_for_include\moderator_submenu_links_list.html:9
+msgid "Модерация новостей"
+msgstr "Moderation von Nachrichten"
+
+#: .\app_news\templates\app_news\news_list_moderation.html:11
+msgid "Новости для модерации"
+msgstr "Nachrichten für die Moderation"
+
+#: .\app_news\templates\app_news\news_list_moderation.html:35
+#: .\app_news\templates\app_news\templates_for_include\base_news_list.html:18
+msgid "Нет новостей, удовлетворяющих вашему запросу"
+msgstr "Keine Nachrichten, die Ihre Anfrage erfüllen"
+
+#: .\app_news\templates\app_news\news_update.html:23
+msgid ""
+"Если вы внесли изменения, после подтверждения новость станет неактивной, вы "
+"уверены что, хотите применить изменения?"
+msgstr "Wenn Sie Änderungen vorgenommen haben, wird die Nachricht nach der Bestätigung inaktiv, sind Sie sicher, dass Sie die Änderungen anwenden möchten?"
+
+#: .\app_news\templates\app_news\news_update.html:25
+msgid "Да"
+msgstr "Ja"
+
+#: .\app_news\templates\app_news\news_update.html:27
+msgid "Нет"
+msgstr "Nein"
+
+#: .\app_news\templates\app_news\personal_news_list.html:5
+msgid "Личные новости"
+msgstr "Persönliche Nachrichten"
+
+#: .\app_news\templates\app_news\personal_news_list.html:9
+msgid "Ваши новости"
+msgstr "Ihre Neuigkeiten"
+
+#: .\app_news\templates\app_news\personal_news_list.html:11
+msgid "успешно удалена"
+msgstr "erfolgreich gelöscht"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:7
+#: .\app_users\templates\app_users\users_list_moderation.html:16
+msgid "Показывать по"
+msgstr "Anzeigen nach"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:13
+msgid "новостей"
+msgstr "Nachrichten"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:14
+msgid "Название новости"
+msgstr "Titel Nachrichten"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:16
+msgid "Фильтр по названию новости"
+msgstr "Filter nach Titel Nachrichten"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:19
+msgid "Автор новости"
+msgstr "Der Autor der Nachrichten"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:21
+msgid "Фильтр по автору новости"
+msgstr "Filter nach Autor Nachrichten"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:24
+msgid "Дата"
+msgstr "Datum"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:25
+msgid "Начало интервала"
+msgstr "Beginn des Intervalls"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:26
+msgid "c"
+msgstr "mit"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:27
+msgid "Конец интервала"
+msgstr "Ende des Intervalls"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:28
+msgid "по"
+msgstr "auf"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:31
+#: .\app_users\templates\app_users\users_list_moderation.html:29
+msgid "Применить фильтр"
+msgstr "Filter anwenden"
+
+#: .\app_news\templates\app_news\templates_for_include\accessible_news_filters.html:32
+#: .\app_users\templates\app_users\users_list_moderation.html:30
+msgid "Сбросить фильтр"
+msgstr "Filter zurücksetzen"
+
+#: .\app_news\templates\app_news\templates_for_include\activity_news_filter.html:14
+#: .\app_users\templates\app_users\users_list_moderation.html:53
+msgid "Все"
+msgstr "Alle"
+
+#: .\app_news\templates\app_news\templates_for_include\activity_news_filter.html:15
+msgid "Только активные"
+msgstr "Nur aktive"
+
+#: .\app_news\templates\app_news\templates_for_include\activity_news_filter.html:16
+msgid "Только неактивные"
+msgstr "Nur inaktive"
+
+#: .\app_news\templates\app_news\templates_for_include\news_content.html:19
+msgid "Инкогнито"
+msgstr "Inkognito"
+
+#: .\app_news\templates\app_news\templates_for_include\news_content.html:23
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:13
+msgid "Еще не опубликована"
+msgstr "Noch nicht veröffentlicht"
+
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:8
+msgid "Перейти к новости"
+msgstr "Zum Newsletter"
+
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:44
+msgid "Перейти к странице модерации новости"
+msgstr "Zum News Moderation Seite"
+
+#: .\app_news\templates\app_news\templates_for_include\news_list_item.html:46
+msgid "Детальная модерация"
+msgstr "Detaillierte Moderation"
+
+#: .\app_news\tests\test_views.py:524 .\app_news\tests\test_views.py:642
+#: .\app_news\tests\test_views.py:643
+msgid "This field is required."
+msgstr "Dieses Feld ist erforderlich."
+
+#: .\app_users\admin.py:18 .\app_users\models.py:28
+msgid "Профиль пользователя"
+msgstr "Profil des Benutzers"
+
+#: .\app_users\admin.py:19 .\app_users\models.py:29
+msgid "Профили пользователей"
+msgstr "Benutzerprofile"
+
+#: .\app_users\admin.py:53
+msgid "Ссылка на связную модель пользователя"
+msgstr "Link zum verknüpften Benutzermodell"
+
+#: .\app_users\admin.py:54
+msgid "Сделать выбранных пользователей верифицированными"
+msgstr "Ausgewählte Benutzer verifiziert"
+
+#: .\app_users\admin.py:55
+msgid "Убрать у выбранных пользователей верификацию"
+msgstr "Verifizierung von ausgewählten Benutzern entfernen"
+
+#: .\app_users\apps.py:7
+msgid "Пользователи"
+msgstr "Benutzer"
+
+#: .\app_users\forms.py:15
+msgid ""
+"Пароль не должен быть слишком похож на другую вашу личную информацию. Ваш "
+"пароль должен содержать как минимум 8 символов. Такой пароль часто "
+"используется. Пароль не может состоять только из цифр."
+msgstr ""
+"Das Passwort darf nicht zu ähnlich zu anderen persönlichen Informationen "
+"sein. Das Passwort muss mindestens 8 Zeichen enthalten. Das Passwort darf "
+"nicht allgemein üblich sein. Das Passwort darf nicht komplett aus Ziffern "
+"bestehen."
+
+#: .\app_users\forms.py:38
+msgid "Это ваш номер телефона, пожалуйста введите другой"
+msgstr "Dies ist Ihre Telefonnummer, bitte geben Sie eine andere"
+
+#: .\app_users\forms.py:40
+msgid "Пользователь с таким номером уже существует"
+msgstr "Ein Benutzer mit dieser Nummer existiert bereits"
+
+#: .\app_users\forms.py:56
+msgid "Необходимо ввести адрес электронной почты"
+msgstr "Sie müssen Ihre E-Mail-Adresse eingeben"
+
+#: .\app_users\forms.py:59
+msgid "Это ваш Email, пожалуйста введите другой"
+msgstr "Dies ist Ihre E-Mail, bitte geben Sie eine andere"
+
+#: .\app_users\forms.py:61
+msgid "Пользователь с таким E-mail уже существует"
+msgstr "Ein Benutzer mit einer solchen E-Mail existiert bereits"
+
+#: .\app_users\forms.py:74
+msgid "Введите логин"
+msgstr "Benutzernamen eingeben"
+
+#: .\app_users\forms.py:82 .\app_users\forms.py:140 .\app_users\forms.py:141
+msgid "Введите пароль"
+msgstr "Passwort eingeben"
+
+#: .\app_users\forms.py:97
+msgid "Введите ваш старый пароль"
+msgstr "Geben Sie Ihr altes Passwort ein"
+
+#: .\app_users\forms.py:99 .\app_users\forms.py:109 .\app_users\forms.py:110
+#: .\app_users\forms.py:142 .\app_users\forms.py:143
+msgid "Повторите пароль"
+msgstr "Passwort wiederholen"
+
+#: .\app_users\forms.py:105 .\app_users\forms.py:106
+msgid "Введите старый пароль"
+msgstr "Altes Passwort eingeben"
+
+#: .\app_users\forms.py:107 .\app_users\forms.py:108
+msgid "Введите новый пароль"
+msgstr "Neues Passwort eingeben"
+
+#: .\app_users\forms.py:119 .\app_users\forms.py:123 .\app_users\forms.py:161
+#: .\app_users\forms.py:162
+msgid "Введите ваш номер телефона"
+msgstr "Geben Sie Ihre Telefonnummer ein"
+
+#: .\app_users\forms.py:121 .\app_users\templates\app_users\profile.html:38
+#: .\app_users\templates\app_users\user_moderation.html:21
+msgid "Номер телефона"
+msgstr "Telefonnummer"
+
+#: .\app_users\forms.py:129
+msgid "Адрес электронной почты должен содержать \"@\""
+msgstr "Die E-Mail-Adresse muss \"@\"enthalten"
+
+#: .\app_users\forms.py:136
+msgid "Логин"
+msgstr "Benutzernamen"
+
+#: .\app_users\forms.py:137
+msgid "Введите ваш логин"
+msgstr "Geben Sie Ihren Benutzernamen ein"
+
+#: .\app_users\forms.py:139
+msgid "Введите ваш e-mail"
+msgstr "Geben Sie Ihre e-mail"
+
+#: .\app_users\forms.py:159
+msgid "Введите новый номер телефона"
+msgstr "Geben Sie eine neue Telefonnummer ein"
+
+#: .\app_users\forms.py:180 .\app_users\forms.py:181 .\app_users\forms.py:182
+msgid "Введите новый город"
+msgstr "Geben Sie eine neue Stadt"
+
+#: .\app_users\forms.py:190
+msgid "Введите пожалуйста название города"
+msgstr "Bitte geben Sie den Namen der Stadt"
+
+#: .\app_users\forms.py:208 .\app_users\forms.py:209 .\app_users\forms.py:210
+msgid "Введите новый логин"
+msgstr "Geben Sie einen neuen Benutzernamen ein"
+
+#: .\app_users\forms.py:228 .\app_users\forms.py:229 .\app_users\forms.py:230
+msgid "Введите новый email"
+msgstr "Geben Sie eine neue E-Mail ein"
+
+#: .\app_users\forms.py:250 .\app_users\forms.py:251
+msgid "Поменять статус верификации"
+msgstr "Verifizierungsstatus ändern"
+
+#: .\app_users\models.py:16
+msgid "Телефонный номер"
+msgstr "Telefonnummer"
+
+#: .\app_users\models.py:19
+msgid "Город проживания"
+msgstr "Wohnort"
+
+#: .\app_users\models.py:23
+msgid "Флаг верификации"
+msgstr "Verifikation Flagge"
+
+#: .\app_users\models.py:24
+msgid "Количество опубликованных новостей"
+msgstr "Anzahl der veröffentlichten Nachrichten"
+
+#: .\app_users\models.py:31
+msgid "Может верифицировать пользователя"
+msgstr "Kann den Benutzer verifizieren"
+
+#: .\app_users\templates\app_users\login.html:5
+msgid "Вход на новостной портал"
+msgstr "Anmeldung zum Nachrichtenportal"
+
+#: .\app_users\templates\app_users\login.html:9
+#: .\project_modules\templates\project_modules\templates_for_include\nav_app_users_links.html:21
+msgid "Войти на сайт"
+msgstr "Anmeldung auf der Website"
+
+#: .\app_users\templates\app_users\login.html:14
+msgid "Войти"
+msgstr "Anmeldung"
+
+#: .\app_users\templates\app_users\main_moderation.html:5
+#: .\app_users\templates\app_users\main_moderation.html:9
+msgid "Главная страница модерации"
+msgstr "Homepage Moderation"
+
+#: .\app_users\templates\app_users\main_moderation.html:12
+#: .\app_users\templates\app_users\users_list_moderation.html:9
+#: .\app_users\templates\app_users\users_list_moderation.html:13
+#: .\project_modules\templates\project_modules\templates_for_include\moderator_submenu_links_list.html:7
+msgid "Модерация пользователей"
+msgstr "Moderation der Benutzer"
+
+#: .\app_users\templates\app_users\password_change.html:5
+msgid "Сменя пароля"
+msgstr "Passwort ändern"
+
+#: .\app_users\templates\app_users\password_change.html:9
+#: .\app_users\templates\app_users\profile.html:19
+msgid "Поменять пароль"
+msgstr "Passwort ändern"
+
+#: .\app_users\templates\app_users\profile.html:6
+#: .\project_modules\templates\project_modules\templates_for_include\nav_app_users_links.html:9
+#: .\project_modules\templates\project_modules\templates_for_include\nav_app_users_links.html:17
+msgid "Личный кабинет"
+msgstr "Persönliches Büro"
+
+#: .\app_users\templates\app_users\profile.html:8
+#: .\app_users\templates\app_users\profile.html:60
+msgid "Вы еще не авторизованы"
+msgstr "Sie sind noch nicht autorisiert"
+
+#: .\app_users\templates\app_users\profile.html:16
+msgid "Личная информация"
+msgstr "Persönliche Informationen"
+
+#: .\app_users\templates\app_users\profile.html:21
+msgid "Пароль успешно изменен"
+msgstr "Passwort erfolgreich geändert"
+
+#: .\app_users\templates\app_users\profile.html:30
+#: .\app_users\templates\app_users\user_moderation.html:17
+msgid "Электронная почта"
+msgstr "E-Mail"
+
+#: .\app_users\templates\app_users\profile.html:34
+#: .\app_users\templates\app_users\user_moderation.html:19
+msgid "Город"
+msgstr "Die Stadt"
+
+#: .\app_users\templates\app_users\profile.html:43
+#: .\app_users\templates\app_users\user_moderation.html:23
+msgid "Количество созданных новостей"
+msgstr "Anzahl der erstellten Nachrichten"
+
+#: .\app_users\templates\app_users\profile.html:46
+msgid "Список своих новостей"
+msgstr "Liste Ihrer Nachrichten"
+
+#: .\app_users\templates\app_users\profile.html:56
+msgid "Вам не разрешено добавлять новости, обратитесь к администратору"
+msgstr "Sie dürfen keine Nachrichten hinzufügen, wenden Sie sich an den Administrator"
+
+#: .\app_users\templates\app_users\register.html:5
+#: .\app_users\templates\app_users\register.html:9
+msgid "Регистрация на новостной портале"
+msgstr "Anmeldung beim Nachrichtenportal"
+
+#: .\app_users\templates\app_users\register.html:13
+msgid "Зарегистрироваться"
+msgstr "Sich registrieren lassen"
+
+#: .\app_users\templates\app_users\templates_for_include\profile_settings_field.html:11
+msgid "Не указано"
+msgstr "Nicht angegeben"
+
+#: .\app_users\templates\app_users\templates_for_include\profile_settings_field.html:16
+msgid "Изменить"
+msgstr "Ändern"
+
+#: .\app_users\templates\app_users\templates_for_include\profile_settings_field.html:49
+msgid "Поменять"
+msgstr "Ändern"
+
+#: .\app_users\templates\app_users\user_moderation.html:5
+#: .\app_users\templates\app_users\user_moderation.html:11
+msgid "Модерация пользователя"
+msgstr "Moderation des Benutzers"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:25
+msgid "Фильтр по имени пользователя"
+msgstr "Filter nach Benutzername"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:54
+msgid "Только верифицированные"
+msgstr "Nur verifiziert"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:55
+msgid "Только не верифицированные"
+msgstr "Nur nicht verifiziert"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:71
+msgid "Приступить к модерации пользователя"
+msgstr "Moderation des Benutzers starten"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:76
+msgid "Пользователь еще не верифицирован"
+msgstr "Benutzer noch nicht verifiziert"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:81
+msgid "Телефон"
+msgstr "Telefon"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:84
+msgid "Созданных новостей"
+msgstr "Erstellte Nachrichten"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:92
+msgid "Статус пользователя"
+msgstr "Benutzer-Status"
+
+#: .\app_users\templates\app_users\users_list_moderation.html:105
+msgid "Нет пользователей, удовлетворяющих вашему запросу"
+msgstr "Keine Benutzer, die Ihre Anfrage erfüllen"
+
+#: .\app_users\tests\test_views.py:58
+#, python-format
+msgid ""
+"Please enter a correct %(username)s and password. Note that both fields may "
+"be case-sensitive."
+msgstr ""
+"Bitte geben Sie eine korrekte %(username) s und Passwort. Beachten Sie, dass beide Felder "
+"groß-und Kleinschreibung beachten."
+
+#: .\app_users\tests\test_views.py:60
+msgid "username"
+msgstr "Benutzernamen"
+
+#: .\project_modules\middleware\requests_per_time_range_middleware.py:29
+#: .\project_modules\middleware\requests_per_time_range_middleware.py:30
+#, python-brace-format
+msgid "{ip}, Превышено разрешенное количество запросов"
+msgstr "{ip}, Die zulässige Anzahl von Anforderungen wurde überschritten"
+
+#: .\project_modules\templates\err\403.html:5
+#: .\project_modules\templates\err\403.html:11
+msgid "Доступ запрещен"
+msgstr "Zugriff verweigert"
+
+#: .\project_modules\templates\err\404.html:5
+#: .\project_modules\templates\err\404.html:11
+msgid "Запрашиваемый ресурс не найден"
+msgstr "Zugriff verweigert"
+
+#: .\project_modules\templates\project_modules\index.html:13
+msgid "Новостной портал"
+msgstr "Nachrichtenportal"
+
+#: .\project_modules\templates\project_modules\index.html:43
+msgid "Показать все новости"
+msgstr "Alle Neuigkeiten anzeigen"
+
+#: .\project_modules\templates\project_modules\index.html:44
+msgid "Самые свежие новости"
+msgstr "Die neuesten Nachrichten"
+
+#: .\project_modules\templates\project_modules\index.html:48
+msgid "Зарегистрироваться на сайте"
+msgstr "Registrieren Sie sich auf der Website"
+
+#: .\project_modules\templates\project_modules\index.html:49
+msgid "Регистрация"
+msgstr "Eintragung"
+
+#: .\project_modules\templates\project_modules\index.html:55
+msgid "Поменять язык"
+msgstr "Sprache ändern"
+
+#: .\project_modules\templates\project_modules\index.html:87
+msgid "Добро пожаловать"
+msgstr "Herzlich willkommen"
+
+#: .\project_modules\templates\project_modules\index.html:88
+msgid "Вы можете видеть новости со всех концов света"
+msgstr "Sie können Nachrichten aus der ganzen Welt sehen"
+
+#: .\project_modules\templates\project_modules\index.html:91
+msgid "Вам разрешено создавать новостные сводки"
+msgstr "Sie dürfen News-Zusammenfassungen erstellen"
+
+#: .\project_modules\templates\project_modules\index.html:93
+msgid "Вам еще не разрешено создавать новостные сводки"
+msgstr "Sie dürfen noch keine News-Zusammenfassungen erstellen"
+
+#: .\project_modules\templates\project_modules\index.html:97
+msgid ""
+"Вы еще не авторизованы, чтобы создавать новостные сводки необходимо "
+"авторизоваться на сайте."
+msgstr "Sie sind noch nicht autorisiert, um Nachrichten zu erstellen, müssen Sie sich auf der Website anmelden."
+
+#: .\project_modules\templates\project_modules\index.html:115
+msgid "Новости со всех концов света"
+msgstr "Nachrichten aus aller Welt"
+
+#: .\project_modules\templates\project_modules\templates_for_include\moderator_objects_paginator_links_list.html:5
+msgid "Применить установленные статусы"
+msgstr "Installierte Status anwenden"
+
+#: .\project_modules\templates\project_modules\templates_for_include\moderator_submenu_links_list.html:4
+msgid "Меню модерации"
+msgstr "Menü Moderation"
+
+#: .\project_modules\templates\project_modules\templates_for_include\nav_app_users_links.html:4
+msgid "Покинуть сайт"
+msgstr "Website verlassen"
+
+#: .\project_modules\templates\project_modules\templates_for_include\nav_app_users_links.html:12
+msgid "Мои новости"
+msgstr "Meine Neuigkeiten"
+
+#: .\project_modules\templates\project_modules\templates_for_include\nav_by_site.html:8
+msgid "На главную страницу"
+msgstr "Zur Startseite"
+
+#: .\project_modules\templates\project_modules\templates_for_include\object_paginator_links_list.html:37
+msgid "Предыдущая"
+msgstr "Vorherige"
+
+#: .\project_modules\templates\project_modules\templates_for_include\object_paginator_links_list.html:41
+msgid "Следующая"
+msgstr "Die nächste"

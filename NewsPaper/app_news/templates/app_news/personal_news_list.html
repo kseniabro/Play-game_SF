@@ -1,0 +1,18 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% block title %}
+        {% trans 'Личные новости' %}
+{%  endblock %}
+
+{% block content %}
+    <h2>{% trans 'Ваши новости' %}</h2>
+    {% if news_successfully_delete %}
+        <h2>{% trans 'Новость' %} {{ deleted_news_title }} {% trans 'успешно удалена' %}</h2>
+    {% endif %}
+
+    {% include 'app_news/templates_for_include/accessible_news_filters.html' %}
+    {% include 'app_news/templates_for_include/activity_news_filter.html' %}
+    {% include 'app_news/templates_for_include/base_news_list.html' %}
+
+{% endblock %}

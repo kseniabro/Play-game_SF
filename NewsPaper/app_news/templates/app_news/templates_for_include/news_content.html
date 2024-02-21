@@ -1,0 +1,25 @@
+{% load i18n %}
+
+<div class="single-news-container">
+    <p class="single-news-container__content">{{ news.content }}</p>
+    <div>
+        <p class="content-info">
+            {% if news.published_at %}
+                {% trans 'Дата публикации' %} {{ news.published_at }}
+            {% else %}
+                {% trans 'Дата создания' %} {{ news.created_at }}
+            {% endif %}
+        </p>
+        <p class="content-info"> {% trans 'Дата редактирования' %} {{ news.edited_at }}</p>
+    </div>
+
+    {% if news.author %}
+        <p class="content-info">{% trans 'Автор' %}: {{ news.author }}</p>
+    {% else %}
+        <p class="content-info">{% trans 'Инкогнито' %}</p>
+    {% endif %}
+
+    {% if not news.published_at %}
+        <p class="content-info content-info_not-published">{% trans 'Еще не опубликована' %}</p>
+    {% endif %}
+</div>

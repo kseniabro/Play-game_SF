@@ -1,0 +1,76 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% load app_users_templatetags %}
+
+{% block title %}
+    {% trans 'Детальная информация о новости' %} {{ news }}
+{%  endblock %}
+
+
+{% block content %}
+    <h2>{{ news.title }}</h2>
+    <div class="single-news-edit-links">
+        {% if request.user == news.author%}
+            {% url 'app_news:news_update' pk=news.id slug=news.slug as news_update_path %}
+            {% trans 'Редактировать новость' as edit_news_trans %}
+            <a href="{{ news_update_path }}" class="update-link" aria-label="{{ edit_news_trans }}" title="{{ edit_news_trans }}">{{ edit_news_trans }}</a>
+            <form method="post" action="{% url 'app_news:news_delete' pk=news.id slug=news.slug %}">
+                {% csrf_token %}
+                <button type="submit">{% trans 'Удалить новость' %}</button>
+            </form>
+        {% endif %}
+        {% if request.user|is_moderator %}
+            {% url 'app_news:news_moderation' pk=news.id slug=news.slug as news_moderate_path %}
+            {% trans 'Модерация новости' as news_moder_trans %}
+            <a class="update-link" href="{{ news_moderate_path }}" aria-label="{{ news_moder_trans }}" title="{{ news_moder_trans }}">{{ news_moder_trans }}</a>
+        {% endif %}
+    </div>
+
+    {% include 'app_news/templates_for_include/news_content.html' %}
+
+    <h2>{% trans 'Комментарии' %}</h2>
+    <ol class="news-comments">
+        {% for comment in news.all_comments %}
+            <li class="news-comments__item">
+                <div class="comment-content">
+                    <p class="comment-content__item">{% trans 'Автор' %}: {{ comment }}</p>
+                    <p class="comment-content__item comment-content__item_text">{{ comment.text }}</p>
+                    <p class="content-info">{% trans 'Дата публикации' %}: {{ comment.created_at }}</p>
+                </div>
+            </li>
+        {% empty %}
+            <div class="comment-content">
+                <p class="comment-content__item">{% trans 'Комментариев пока что нету, вы можете стать первым' %}</p>
+            </div>
+        {% endfor %}
+    </ol>
+
+    <h2>{% trans 'Добавить комментарий' %}</h2>
+    <form method="post" action="{% url 'app_news:news_detail' pk=news.pk slug=news.slug%}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% if not request.user.is_authenticated %}
+
+            <p>
+                {{ form.user_name.label_tag }}
+                {{ form.user_name.errors }}
+                {{ form.user_name }}
+            </p>
+
+        {% endif %}
+
+        {% include 'project_modules/templates_for_include/scroling_to_field_with_errors.html' with label_id=form.text.id_for_label %}
+
+        <p>
+            {{ form.text.label_tag }}
+            {{ form.text.errors }}
+            {{ form.text }}
+        </p>
+
+        {% trans 'Опубликовать комментарий' as publish_comment_trans %}
+        <button type="submit" aria-label="{{ publish_comment_trans }}" title="{{ publish_comment_trans }}">{{ publish_comment_trans }}</button>
+    </form>
+
+{% endblock %}

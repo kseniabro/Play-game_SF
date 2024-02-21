@@ -1,0 +1,17 @@
+{% extends 'project_modules/index.html' %}
+{% load  i18n %}
+
+{% block title %}
+    {% trans 'Вход на новостной портал' %}
+{%  endblock %}
+
+{% block content %}
+    {% trans 'Войти на сайт' as login_trans %}
+    <h2>{{ login_trans }}</h2>
+    <div class="center-content">
+        <form method="post" action="{% url 'app_users:login' %}?next={% url 'app_users:profile' %}">
+            {% include 'app_users/templates_for_include/login_register_form.html' %}
+            <button type="submit" aria-label="{{ login_trans }}" title="{{ login_trans }}">{% trans 'Войти' %}</button>
+        </form>
+    </div>
+{% endblock %}

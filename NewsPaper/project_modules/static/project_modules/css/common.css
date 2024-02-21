@@ -1,0 +1,142 @@
+/*Список объектов*/
+.object-filters {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px 0 20px 0;
+}
+
+.object-filters_visible-filters {
+    flex-wrap: wrap;
+    padding: 10px;
+    background: #FFFFFF;
+    border-radius: 5px;
+}
+
+.object-filters__buttons {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+}
+
+.object-filters__buttons button{
+    flex: 0 1 auto;
+}
+
+.object-filters__fields {
+    margin: 5px;
+    background: linear-gradient(to right, #00BFFF, #B0C4DE);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.object-filters__status-fields_checked {
+    background: linear-gradient(to left, #00BFFF, #B0C4DE);
+    box-shadow: 0 0 5px 5px #ffffff;
+    border-color: #ffffff;
+}
+
+.object-filters__status-fields input{
+    cursor: pointer;
+}
+
+.object-filters__status-fields input:focus{
+    outline: none;
+    box-shadow: none;
+}
+
+.object-list-control {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.objects-list-control__submit-button {
+    margin-left: auto;
+}
+
+.object-list__item {
+    margin: 10px;
+}
+
+.object-list__item_without_status a {
+    background: linear-gradient(to bottom, #FFFFFF, #B0C4DE);
+}
+
+.object-list__item_without_status button {
+    background: linear-gradient(to bottom, #FFFFFF, #B0C4DE);
+}
+
+.object-list__item a:hover .content-info{
+    color: #000000;
+}
+
+.object-list__item-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.object-list__info {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.object-list__link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+    background: linear-gradient(to right, #00BFFF, #B0C4DE);
+}
+
+.object-list__link:hover{
+    background: #0e5792;
+}
+
+.object-list__link_main-link {
+    flex: 1 1 auto;
+}
+
+.object-list__link_edit-link {
+    margin-left: 10px;
+}
+
+.object-list__link-context {
+    margin: 5px;
+    flex: 0 1 auto;
+}
+
+.object-list__status-label {
+    font-size: 12px;
+    margin-left: 10px;
+    word-break: normal;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.paginate-objects {
+    padding: 10px;
+    margin: 10px 10px 10px 0;
+}
+.paginate-objects__container {
+    margin: 20px 0;
+}
+
+.paginate-objects__links-list{
+    list-style: none;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+.paginate-objects__link {
+    margin-right: 10px;
+}
+
+.paginate-objects__link_visible_page {
+    font-size: 25px;
+    font-weight: 700;
+    padding: 5px;
+}

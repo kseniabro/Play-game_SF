@@ -1,0 +1,108 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% load static %}
+{% load app_users_templatetags %}
+{% load app_news_templatetags %}
+
+{% block title %}
+    {% trans 'Модерация пользователей' %}
+{%  endblock %}
+
+{% block content %}
+    <h2>{% trans 'Модерация пользователей' %}</h2>
+
+    <div class="object-filters object-filters_visible-filters">
+        <label class="object-filters__fields">{% trans 'Показывать по' %}
+            <select name="users_per_page">
+                <option>3</option>
+                <option>25</option>
+                <option>50</option>
+            </select>
+        {% trans пользователей %}</label>
+        {% trans 'Имя пользователя' as username_trans %}
+        <label class="object-filters__fields">{{ username_trans }}
+            {% trans 'Фильтр по имени пользователя' as filter_username_trans %}
+            <input name="username" aria-label="{{ filter_username_trans }}" title="{{ filter_username_trans }}" placeholder="{{ username_trans }}">
+        </label>
+        <div class="object-filters__buttons">
+            <button type="button" id="users_filter_apply">{% trans 'Применить фильтр' %}</button>
+            <button type="button" id="users_filter_delete">{% trans 'Сбросить фильтр' %}</button>
+        </div>
+    </div>
+
+    <script type="module">
+        import {addCommonFilters} from '{% static 'project_modules/js/change_query_string.js' %}';
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Установка фильтров для отображаемых пользователей.
+        addCommonFilters('users', ['username'])
+        });
+    </script>
+
+    <script type="module">
+        import {addStatusFilter} from '{% static 'project_modules/js/change_query_string.js' %}';
+
+        document.addEventListener("DOMContentLoaded", function () {
+            // Управление отображением пользователей по статусу верификации.
+            addStatusFilter('displayed_users')
+        });
+    </script>
+
+    <div class="object-filters">
+        <a class="update-link object-filters__status-fields"><input name="displayed_news" type="radio" value="all">{% trans 'Все' %}</a>
+        <a class="update-link object-filters__status-fields"><input name="displayed_news" type="radio" value="verified" >{% trans 'Только верифицированные' %}</a>
+        <a class="update-link object-filters__status-fields"><input name="displayed_news" type="radio" value="not_verified">{% trans 'Только не верифицированные' %}</a>
+    </div>
+
+    {% include 'project_modules/templates_for_include/set_links_for_object_list_paginator.html' %}
+
+    {% if user_profiles %}
+        <form method="post" action="{{ request.get_full_path }}">
+            {% csrf_token %}
+            {{ formset.management_form }}
+            {% include 'project_modules/templates_for_include/moderator_objects_paginator_links_list.html' %}
+
+            <div>
+                <ol class="object-list" start="{{ page_obj.start_index }}">
+                    {% for user_profile, single_form in user_profiles|zip_lists:formset %}
+                        <li class="object-list__item {% if not user_profile.is_verified %} object-list__item_without_status {% endif %}">
+                            <div class="object-list__item-container">
+                            {% trans 'Приступить к модерации пользователя' as usermaderate_begin_trans %}
+                                <a class="object-list__link object-list__link_main-link" href="{% url 'app_users:user_moderation' pk=user_profile.pk%}" aria-label="{{ usermaderate_begin_trans }} {{ user_profile.user.username }}" title="{{ usermaderate_begin_trans }} {{ user_profile.user.username }}">
+                                    <span class="object-list__link-context">{{ user_profile.user.username }}</span>
+
+                                    {% if not user_profile.is_verified %}
+                                        <span class="object-list__link-context">({% trans 'Пользователь еще не верифицирован' %})</span>
+                                    {% endif %}
+
+
+                                    <div class="object-list__info">
+                                        <span class="object-list__link-context content-info">{% trans 'Телефон' %}: {{ user_profile.telephone }}</span>
+
+                                        <span class="object-list__link-context content-info">
+                                            {% trans 'Созданных новостей' %}: {{ user_profile.number_of_published_news }}
+                                        </span>
+                                    </div>
+                                </a>
+
+                                {{ single_form.non_field_errors }}
+                                {{ single_form.id }}
+                                {{ single_form.is_verified.errors }}
+                                <label class="object-list__status-label">{% trans 'Статус пользователя' %}&nbsp;{{ single_form.is_verified }}</label>
+
+                            </div>
+                        </li>
+
+                    {% endfor %}
+                </ol>
+            </div>
+
+            {% include 'project_modules/templates_for_include/moderator_objects_paginator_links_list.html' %}
+        </form>
+
+    {% else %}
+        <h2>{% trans 'Нет пользователей, удовлетворяющих вашему запросу' %}</h2>
+    {% endif %}
+
+{% endblock %}

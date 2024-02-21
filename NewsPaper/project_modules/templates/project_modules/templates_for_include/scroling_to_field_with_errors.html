@@ -1,0 +1,8 @@
+{% if form.errors %}
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("{{ label_id }}").scrollIntoView();
+        window.scrollBy(0,-200)
+      });
+    </script>
+{% endif %}

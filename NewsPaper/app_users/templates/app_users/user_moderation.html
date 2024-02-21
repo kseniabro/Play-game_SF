@@ -1,0 +1,40 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% block title %}
+        {% trans 'Модерация пользователя' %} {{ user_profile.user.username }}
+{% endblock %}
+
+{% block content %}
+    <div class="center-content">
+        <div class="center-content center-content_greeting">
+            {% trans 'Модерация пользователя' as moderate_user_trans%}
+            {% with title_name=moderate_user_trans|add:' '|add:user_profile.user.username %}
+                <h2>{{ title_name }}</h2>
+
+                {% trans 'Имя пользователя' as username_trans %}
+                {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=username_trans settings_value=user_profile.user.username %}
+                {% trans 'Электронная почта' as email_trans %}
+                {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=email_trans settings_value=user_profile.user.email %}
+                {% trans 'Город' as city_trans %}
+                {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=city_trans settings_value=user_profile.city %}
+                {% trans 'Номер телефона' as phone_number_trans %}
+                {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=phone_number_trans settings_value=user_profile.telephone %}
+                {% trans 'Количество созданных новостей' as count_news_trans %}
+                {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=count_news_trans settings_value=user_profile.number_of_published_news %}
+
+                <div class="center-content user-status {% if user_profile.is_verified %}user-status_verified{% else %}user-status_not-verified{% endif %}">
+                    <form method="post" action="{% url 'app_users:user_moderation' pk=user_profile.id%}">
+                        {% csrf_token %}
+
+                        {% include 'project_modules/templates_for_include/scroling_to_field_with_errors.html' with label_id=form.is_verified.id_for_label %}
+
+                        {{ form.as_p }}
+
+                            <button type="submit" aria-label="{{ title_name }}" title="{{ title_name }}">{{ title_name }}</button>
+                    </form>
+                </div>
+            {% endwith %}
+        </div>
+    </div>
+{% endblock %}

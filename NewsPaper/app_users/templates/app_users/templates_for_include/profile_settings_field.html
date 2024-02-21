@@ -1,0 +1,54 @@
+{% load i18n %}
+{% url 'app_users:profile' as personal_account_path %}
+
+<div class="profile-settings-field {% if request.path == personal_account_path %}profile-settings-field_inside-form-hidden{% endif %}" change-profile-settings-field>
+    <div class="settings-line">
+        <p class="settings-line__item settings-line__item_label">{{ settings_label }}:</p>
+        <p class="settings-line__item settings-line__item_value">
+            {% if settings_value %}
+                {{ settings_value }}
+            {% else %}
+                {% trans 'Не указано' %}
+            {% endif %}
+        </p>
+
+        {% if request.path == personal_account_path %}
+            <a class="update-link" profile_change_link>{% trans 'Изменить' %}</a>
+        {% endif %}
+
+    </div>
+    {% if request.path == personal_account_path %}
+        <div profile_change_form hidden="true">
+            <form method="post" action="{{ url }}">
+                {% csrf_token %}
+
+                {{ form.non_field_errors }}
+                {% for field in form %}
+                    {{ field.errors }}
+                    {% if field.errors %}
+                        <script>
+                          document.addEventListener("DOMContentLoaded", function () {
+                              let settings_field = document.getElementById("{{ field.id_for_label }}"),
+                                  editableField = settings_field.parentNode,
+                                  event = new Event("click");
+
+                              while (!(editableField.getAttributeNames().indexOf('change-profile-settings-field') > -1)) {
+                                  editableField = editableField.parentNode
+                              }
+
+                              editableField.dispatchEvent(event);
+                              editableField.scrollIntoView();
+                              window.scrollBy(0,-200)
+                          });
+                        </script>
+                    {% endif %}
+                    <p>
+                        {{ field }}
+                    </p>
+                {% endfor %}
+                {% trans 'Поменять' as change_trans %}
+                <button type="submit" aria-label="{{ change_trans }} {{ settings_label }}" title="{{ change_trans }} {{ settings_label }}">{{ change_trans }}</button>
+            </form>
+        </div>
+    {% endif %}
+</div>

@@ -1,0 +1,61 @@
+/*Личный кабинет*/
+.profile-settings-field {
+    padding: 10px;
+    border-bottom: solid 2px #0e5792;
+}
+
+.profile-settings-field_inside-form-visible {
+    border-radius: 5px;
+    background-color: #B0C4DE;
+}
+
+.profile-settings-field_inside-form-hidden {
+    cursor: pointer;
+}
+
+.profile-settings-field_inside-form-hidden:hover .update-link {
+    background: linear-gradient(to left, #00BFFF, #B0C4DE);
+    box-shadow: 0 0 5px 5px #B0C4DE;
+    border-color: #ffffff;
+    color: #ffffff;
+}
+
+.settings-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+}
+
+.settings-line__item {
+    padding: 10px;
+    margin: 0 30px 0 0;
+}
+
+.settings-line__item_label {
+    color: #0e5792;
+    width: 300px;
+    text-align: left;
+}
+
+.settings-line__item_value {
+    flex: 1 1 auto;
+    text-align: left;
+}
+
+.user-status {
+    border-radius: 5px;
+}
+
+.user-status_verified {
+    background: linear-gradient(to left, #00BFFF, #B0C4DE);
+}
+
+.user-status_not-verified {
+    background: linear-gradient(to bottom, #FFFFFF, #B0C4DE);
+}
+
+/*Классы django форм*/
+.user-verified-status {
+    cursor: pointer;
+}

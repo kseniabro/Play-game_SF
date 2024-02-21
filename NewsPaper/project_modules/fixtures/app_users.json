@@ -1,0 +1,46 @@
+[
+  {
+    "model": "app_users.userprofile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "telephone": "1",
+      "city": "1",
+      "is_verified": true,
+      "number_of_published_news": 330
+    }
+  },
+  {
+    "model": "app_users.userprofile",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "telephone": "2",
+      "city": "2",
+      "is_verified": true,
+      "number_of_published_news": 324
+    }
+  },
+  {
+    "model": "app_users.userprofile",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "telephone": "3",
+      "city": "1",
+      "is_verified": true,
+      "number_of_published_news": 349
+    }
+  },
+  {
+    "model": "app_users.userprofile",
+    "pk": 4,
+    "fields": {
+      "user": 4,
+      "telephone": "34",
+      "city": "4",
+      "is_verified": false,
+      "number_of_published_news": 0
+    }
+  }
+]

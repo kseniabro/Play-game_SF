@@ -1,0 +1,232 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial;
+    font-size: 20px;
+    min-width: 320px;
+    background-color: #d8d9db;
+    box-sizing: border-box;
+}
+
+a {
+    font-size: 18px;
+    text-decoration: none;
+    color: inherit;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+a:hover{
+    background-color: #0e5792;
+    border-color: #ffffff;
+    box-shadow: 0 0 5px 5px #ffffff;
+    color: #ffffff;
+}
+
+button {
+    font-size: 18px;
+    background: linear-gradient(to right, #00BFFF, #B0C4DE);
+    border: 2px outset rgb(133, 133, 133);
+    padding: 5px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: linear-gradient(to left, #00BFFF, #B0C4DE);
+    color: #ffffff;
+    box-shadow: 0 0 5px 5px #ffffff;
+    border-color: #ffffff;
+}
+
+button:active {
+    outline: none;
+}
+
+button:focus {
+    outline: none;
+}
+
+h2 {
+    font: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    word-break: break-all;
+}
+
+input:focus{
+    outline: 2px solid #0e5792;
+    border-color: #ffffff;
+    box-shadow: 0 0 5px 5px #ffffff;
+}
+
+textarea:focus {
+    outline: 2px solid #0e5792;
+    border-color: #ffffff;
+    box-shadow: 0 0 5px 5px #ffffff;
+}
+
+::selection {
+    background-color: #0e5792;
+}
+
+/*Контейнеры*/
+.center-content {
+    text-align: center;
+    padding: 10px;
+}
+
+.center-content_with-border{
+    border-bottom: solid 2px #0e5792;
+}
+
+.center-content_greeting {
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 5px;
+}
+
+.center-content__links {
+    display: flex;
+    justify-content: space-around;
+}
+
+.fixed-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/*Информация о контенте*/
+.content-info {
+    display: inline-block;
+    background-color: #ffffff;
+    border-radius: 5px;
+    font-size: 10px;
+    padding: 5px;
+    margin: 10px;
+    white-space: nowrap;
+}
+
+.content-info_not-published {
+    background: linear-gradient(to bottom, #FFFFFF, #B0C4DE);
+}
+
+/*Блок навигации*/
+.nav-container {
+	padding: 20px 0;
+	display: flex;
+	align-items: center;
+}
+
+.nav-list{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.nav-list__item{
+	display: inline-block;
+}
+
+.nav-list__item:not(:last-child)::after {
+	padding: 0 10px;
+	content: "/";
+	color: #0e5792;
+}
+
+.nav-list__item_moderator {
+	border-radius: 5px;
+	position: relative;
+}
+
+.nav-list__item_moderator:hover {
+	background: linear-gradient(to right, #00BFFF, #B0C4DE);
+}
+
+.nav-list__item_moderator:hover .submenu {
+	transform: scaleY(1);
+}
+
+.submenu {
+	transform: scaleY(0);
+	list-style: none;
+	padding: 0;
+
+	position: absolute;
+	border-radius: 5px;
+	width: 250px;
+    z-index: 10;
+    transition: 0.2s ease-in-out;
+}
+
+.submenu__item{
+	margin: 5px 0 0 0;
+	display: inline-block;
+	border-radius: 5px;
+}
+
+.submenu__item_color{
+	background: linear-gradient(to right, #00BFFF, #B0C4DE);
+}
+
+.submenu__item_color_white {
+	background: #FFFFFF;
+}
+
+/*Кастомные ссылки*/
+.update-link {
+    cursor: pointer;
+    font-size: 18px;
+    background: linear-gradient(to right, #00BFFF, #B0C4DE);
+    border: 2px outset rgb(133, 133, 133);
+    display: inline-block;
+}
+
+.update-link:hover {
+    background: linear-gradient(to left, #00BFFF, #B0C4DE);
+    box-shadow: 0 0 5px 5px #ffffff;
+    border-color: #ffffff;
+}
+
+.update-link_dark-theme:hover {
+    box-shadow: 0 0 5px 5px #B0C4DE;
+}
+
+/*Django-styles*/
+    /*Поля с ошибками*/
+    .invalid_field {
+        outline: 2px solid #ff0800;
+    }
+
+    .invalid_field::placeholder {
+        color: #ff0800;
+    }
+
+    .errorlist {
+        text-align: justify;
+        margin: 0 auto;
+        padding: 0;
+        color: #ff0800;
+        font-size: 12px;
+        max-width: 300px;
+    }
+
+    /*Классы для django форм*/
+    .form-field {
+        width: 100%;
+        margin: 10px;
+        padding: 5px;
+    }
+
+    .form-field_content {
+        resize: none;
+    }
+
+        /*Login-Register-Update*/
+        .login-register-update-field {
+            height: 30px;
+            width: 300px;
+            text-align: center;
+            font-size: 16px;
+        }

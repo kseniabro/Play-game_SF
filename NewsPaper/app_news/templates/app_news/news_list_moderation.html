@@ -1,0 +1,38 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% load app_news_templatetags %}
+
+{% block title %}
+        {% trans 'Модерация новостей' %}
+{%  endblock %}
+
+{% block content %}
+    <h2>{% trans 'Новости для модерации' %}</h2>
+
+    {% include 'app_news/templates_for_include/accessible_news_filters.html' %}
+    {% include 'app_news/templates_for_include/activity_news_filter.html' %}
+    {% include 'project_modules/templates_for_include/set_links_for_object_list_paginator.html' %}
+
+    {% if news %}
+        <form method="post" action="{{ request.get_full_path }}">
+        {% csrf_token %}
+        {{ formset.management_form }}
+            {% include 'project_modules/templates_for_include/moderator_objects_paginator_links_list.html' %}
+
+            <div>
+                <ol class="object-list" start="{{ page_obj.start_index }}">
+                    {% for single_news, single_form in news|zip_lists:formset %}
+                        {% include 'app_news/templates_for_include/news_list_item.html' %}
+                    {% endfor %}
+                </ol>
+            </div>
+
+            {% include 'project_modules/templates_for_include/moderator_objects_paginator_links_list.html' %}
+        </form>
+
+    {% else %}
+        <h2>{% trans 'Нет новостей, удовлетворяющих вашему запросу' %}</h2>
+    {% endif %}
+
+{% endblock %}

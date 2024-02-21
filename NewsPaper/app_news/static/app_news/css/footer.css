@@ -1,0 +1,21 @@
+footer{
+	margin-top: 30px;
+	font-size: 16px;
+	background: linear-gradient(to left, #00BFFF, #B0C4DE);
+}
+
+.submenu_footer {
+	transform-origin: 100% 100%;
+	top: -300%;
+}
+
+.nav-list__item_moderator_white:hover {
+	background: #FFFFFF;
+}
+
+.nav-container__copyright {
+	color: #0e5792;
+	font-size: 14px;
+	border-top: solid 1px #0e5792;
+	justify-content: center;
+}
