@@ -1,0 +1,17 @@
+{% load static %}
+{% load i18n %}
+
+<script type="module">
+    import {addStatusFilter} from '{% static 'project_modules/js/change_query_string.js' %}';
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Управление отображением новостей по статусу активности.
+        addStatusFilter('displayed_news')
+    });
+</script>
+
+<div class="object-filters">
+    <a class="update-link object-filters__status-fields"><input name="displayed_news" type="radio" value="all">{% trans 'Все' %}</a>
+    <a class="update-link object-filters__status-fields"><input name="displayed_news" type="radio" value="active" >{% trans 'Только активные' %}</a>
+    <a class="update-link object-filters__status-fields"><input name="displayed_news" type="radio" value="not_active">{% trans 'Только неактивные' %}</a>
+</div>

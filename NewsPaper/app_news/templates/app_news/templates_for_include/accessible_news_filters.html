@@ -1,0 +1,43 @@
+{% load static %}
+{% load i18n %}
+
+{% url 'app_news:personal_news_list' as personal_news_path %}
+
+<div class="object-filters object-filters_visible-filters">
+    <label class="object-filters__fields">{% trans 'Показывать по' %}
+        <select name="news_per_page">
+            <option>10</option>
+            <option>25</option>
+            <option>50</option>
+        </select>
+    {% trans 'новостей' %}</label>
+    {% trans 'Название новости' as news_title_trans %}
+    <label class="object-filters__fields">{{ news_title_trans }}
+        {% trans 'Фильтр по названию новости' as filter_news_title_trans %}
+        <input name="news_title" aria-label="{{ filter_news_title_trans }}" title="{{ filter_news_title_trans }}" placeholder="{{ news_title_trans }}">
+    </label>
+    {% trans 'Автор новости' as news_author_trans %}
+    <label class="object-filters__fields" {% if request.path == personal_news_path %} hidden {% endif %}>{{ news_author_trans }}
+        {% trans 'Фильтр по автору новости' as filter_news_author_trans %}
+        <input name="news_author" aria-label="{{ filter_news_author_trans }}" title="{{ filter_news_author_trans }}" placeholder="{{ news_author_trans }}">
+    </label>
+    <label class="object-filters__fields">{% trans 'Дата' %}
+        {% trans 'Начало интервала' as start_interval_trans %}
+        {% trans 'c' %} <input name="news_date_begin" type="date" aria-label="{{ start_interval_trans }}" title="{{ start_interval_trans }}">
+        {% trans 'Конец интервала' as end_interval_trans %}
+        {% trans 'по' %} <input name="news_date_end" type="date" aria-label="{{ end_interval_trans }}" title="{{ end_interval_trans }}">
+    </label>
+    <div class="object-filters__buttons">
+        <button type="button" id="news_filter_apply">{% trans 'Применить фильтр' %}</button>
+        <button type="button" id="news_filter_delete">{% trans 'Сбросить фильтр' %}</button>
+    </div>
+</div>
+
+<script type="module">
+    import {addCommonFilters} from '{% static 'project_modules/js/change_query_string.js' %}';
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Установка фильтров для отображаемых новостей.
+        addCommonFilters('news', ['news_title', 'news_author', 'news_date_begin', 'news_date_end'])
+    });
+</script>

@@ -1,0 +1,48 @@
+{% load i18n %}
+{% load app_news_templatetags %}
+
+{% if page_obj.has_other_pages %}
+    <div class="paginate-objects">
+        <nav class="paginate-objects__container">
+            <ul class="paginate-objects__links-list">
+                {% with visible_pages=2 %}
+                    {% for p in paginator.page_range %}
+                        {% if page_obj.number == p %}
+                            <li class="paginate-objects__link paginate-objects__link_visible_page">{{ p }}</li>
+                        {% elif p >= page_obj.number|subtract:visible_pages and p <= page_obj.number|add:visible_pages  %}
+                            {% include 'project_modules/templates_for_include/single_link_in_objects_paginator.html' with p=p text=p%}
+                        {% elif p == 1 %}
+                            {% include 'project_modules/templates_for_include/single_link_in_objects_paginator.html' with p=p text=p%}
+                            {% if page_obj.number > visible_pages|add:2 %}
+                                <li class="paginate-objects__link">
+                                    ...
+                                </li>
+                            {% endif %}
+                        {% elif p == paginator.num_pages %}
+                            {% if page_obj.number < paginator.num_pages|subtract:visible_pages|subtract:1 %}
+                                <li class="paginate-objects__link">
+                                    ...
+                                </li>
+                            {% endif %}
+                            {% include 'project_modules/templates_for_include/single_link_in_objects_paginator.html' with p=p text=p%}
+                        {% endif %}
+                    {% endfor %}
+                {% endwith %}
+            </ul>
+        </nav>
+        <div>
+            <nav class="paginate-objects__container">
+                <ul class="paginate-objects__links-list">
+                    {% if page_obj.has_previous %}
+                        {% trans 'Предыдущая'  as prev_trans%}
+                        {% include 'project_modules/templates_for_include/single_link_in_objects_paginator.html' with p=page_obj.previous_page_number text=prev_trans %}
+                    {% endif %}
+                    {% if page_obj.has_next %}
+                        {% trans 'Следующая'  as next_trans%}
+                        {% include 'project_modules/templates_for_include/single_link_in_objects_paginator.html' with p=page_obj.next_page_number text=next_trans %}
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endif %}

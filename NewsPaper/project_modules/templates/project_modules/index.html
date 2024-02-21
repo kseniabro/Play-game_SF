@@ -1,0 +1,119 @@
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% get_language_info for LANGUAGE_CODE as lang %}
+<!DOCTYPE html>
+<html lang="{{ lang.code }}">
+<head>
+
+    {% load static %}
+
+    <title>
+
+        {% block title %}
+            {% trans 'Новостной портал' %}
+        {%  endblock %}
+
+    </title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'app_news/css/normalize.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app_news/css/general_styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app_news/css/header.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app_news/css/footer.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app_news/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app_users/css/main.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'project_modules/css/common.css' %}">
+
+    <script src="{% static 'app_news/js/change_localization.js' %}"></script>
+    <script src="{% static 'app_news/js/current_date_time.js' %}"></script>
+    <script src="{% static 'app_news/js/change_news_confirmation.js' %}"></script>
+
+    <script src="{% static 'app_users/js/phoneinput.js' %}"></script>
+    <script src="{% static 'app_users/js/edit_profile_data.js' %}"></script>
+
+</head>
+<body>
+    <header>
+        <!--Главная строка-->
+        <div class="blue-bar">
+            <div class="fixed-container">
+                <div class="nav-container nav-container__header-top">
+                    {% trans 'Показать все новости' as show_all_news %}
+                    <a href="{% url 'app_news:news_list' %}" aria-label="{{ show_all_news }}" title="{{ show_all_news }}">{% trans 'Самые свежие новости' %}</a>
+
+                    {% include 'project_modules/templates_for_include/nav_app_users_links.html' with top_menu_flag=True %}
+
+                    {% trans 'Зарегистрироваться на сайте' as register_trans %}
+                    <a href="{% url 'app_users:register' %}" aria-label="{{ register_trans }}" title="{{ register_trans }}">{% trans 'Регистрация' %}</a>
+                    <time id="current_date_time" class="title-time"></time>
+                    <div class="localization-wrap">
+                        <form name="setLang" action="{% url 'set_language' %}" method="post">{% csrf_token %}
+                            <input name="next" type="hidden" value="{{ redirect_to }}">
+                            <label class="localization-wrap__label">
+                                <p>{% trans "Поменять язык" %}</p>
+                                <select name="language" class="localization-wrap__select">
+                                    {% get_available_languages as LANGUAGES %}
+                                    {% get_language_info_list for LANGUAGES as languages %}
+                                    {% for language in languages %}
+                                        <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %} selected{% endif %}>
+                                            {{ language.name_local }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </label>
+                       </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Строка навигации по сайту -->
+        <div class="fixed-container">
+            <div class="nav-container nav-container__header-nav-by-site">
+                {% include 'project_modules/templates_for_include/nav_by_site.html' with top_menu_flag=True %}
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="fixed-container">
+
+            {% block content %}
+                <div class="center-content">
+                    <div class="center-content center-content_greeting">
+                        {% if request.user.is_authenticated %}
+                            <h2>{% trans 'Добро пожаловать' %}! {{ request.user.username }}</h2>
+                            <p>{% trans 'Вы можете видеть новости со всех концов света' %}!</p>
+
+                            {% if request.user.profile.is_verified %}
+                                <p>{% trans 'Вам разрешено создавать новостные сводки' %}</p>
+                            {% else %}
+                                <p>{% trans 'Вам еще не разрешено создавать новостные сводки' %}</p>
+                            {% endif %}
+
+                        {% else %}
+                            <p>{% trans 'Вы еще не авторизованы, чтобы создавать новостные сводки необходимо авторизоваться на сайте.' %}</p>
+                        {% endif %}
+                        <div class="center-content__links">
+                            {% include 'project_modules/templates_for_include/nav_app_users_links.html' with class='update-link'%}
+                        </div>
+                    </div>
+                </div>
+            {% endblock %}
+
+        </div>
+    </main>
+    <footer>
+        <div class="fixed-container">
+            <div class="nav-container">
+                {% include 'project_modules/templates_for_include/nav_by_site.html' %}
+            </div>
+        </div>
+        <div class="nav-container nav-container__copyright">
+            <span>&copy; {% trans 'Новости со всех концов света' %}</span>
+        </div>
+    </footer>
+</body>
+</html>

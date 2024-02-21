@@ -1,0 +1,22 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Создать новостную сводку' %}
+{% endblock %}
+
+{% block content %}
+    {% trans 'Создать новостную сводку'  as create_news_trans %}
+    {% with title_name=create_news_trans %}
+        <h2>{{ title_name }}</h2>
+
+        <form method="post" action="{% url 'app_news:news_create' %}">
+            {% include 'app_news/templates_for_include/base_news_template_form.html' %}
+
+            <div class="update-news">
+                <button type="submit" aria-label="{{ title_name }}" title="{{ title_name }}">{{ title_name }}</button>
+            </div>
+
+        </form>
+    {% endwith %}
+{% endblock %}

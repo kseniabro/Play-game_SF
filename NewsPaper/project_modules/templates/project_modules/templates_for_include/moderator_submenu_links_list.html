@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<li class="nav-list__item nav-list__item_moderator {{ nav_list__item_moderator }}">
+    {% trans 'Меню модерации' as menu_moder_trans%}
+    <a href="{% url 'app_users:main_moderator' %}" aria-label="{{ menu_moder_trans }}" title="{{ menu_moder_trans }}">{{ menu_moder_trans }}</a>
+    <ul class="submenu {{ nav_list_submenu }}">
+        {% trans 'Модерация пользователей' as users_moder_trans%}
+        <li class="submenu__item {{ nav_list_submenu_item }}"><a href="{% url 'app_users:users_list_moderation' %}" aria-label="{{ users_moder_trans }}" title="{{ users_moder_trans }}">{{ users_moder_trans }}</a>
+        {% trans 'Модерация новостей' as news_moder_trans%}
+        <li class="submenu__item {{ nav_list_submenu_item }}"><a href="{% url 'app_news:news_list_moderation' %}" aria-label="{{ news_moder_trans }}" title="{{ news_moder_trans }}">{{ news_moder_trans }}</a>
+    </ul>

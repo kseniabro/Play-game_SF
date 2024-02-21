@@ -1,0 +1,5 @@
+{% csrf_token %}
+
+{% include 'project_modules/templates_for_include/scroling_to_field_with_errors.html' with label_id=form.content.id_for_label %}
+
+{{ form.as_p }}

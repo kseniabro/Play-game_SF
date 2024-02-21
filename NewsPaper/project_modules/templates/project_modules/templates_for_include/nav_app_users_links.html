@@ -1,0 +1,23 @@
+{% load i18n %}
+
+{% if request.user.is_authenticated %}
+    {% trans 'Покинуть сайт' as logout_trans%}
+    <a href="{% url 'app_users:logout' %}?next={{ request.path }}" class="{{ class }}" aria-label="{{ logout_trans }}" title="{{ logout_trans }}">{{ logout_trans }}</a>
+    {% url 'app_users:profile' as user_profile_url %}
+    {% if top_menu_flag %}
+        <div class="personal-account-links-container">
+            {% trans 'Личный кабинет' as personal_account_trans %}
+            <a href="{{ user_profile_url }}"  class="{{ class }}" aria-label="{{ personal_account_trans }}" title="{{ personal_account_trans }}">{{ personal_account_trans }}</a>
+            <ul class="submenu submenu_personal-account-links">
+                {% trans 'Мои новости' as my_news_trans %}
+                <li class="submenu__item submenu__item_color_white"><a href="{% url 'app_news:personal_news_list' %}" aria-label="{{ my_news_trans }}" title="{{ my_news_trans }}">{{ my_news_trans }}</a>
+            </ul>
+        </div>
+    {% else %}
+        {% trans 'Личный кабинет' as personal_account_trans %}
+         <a href="{{ user_profile_url }}"  class="{{ class }}" aria-label="{{ personal_account_trans }}" title="{{ personal_account_trans }}">{{ personal_account_trans }}</a>
+    {% endif %}
+{% else %}
+    {% trans 'Войти на сайт' as login_trans %}
+    <a href="{% url 'app_users:login' %}" class="{{ class }}" aria-label="{{ login_trans }}" title="{{ login_trans }}">{{ login_trans }}</a>
+{% endif %}

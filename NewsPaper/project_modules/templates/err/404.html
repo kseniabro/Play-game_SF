@@ -1,0 +1,14 @@
+{% extends 'project_modules/index.html' %}
+{% load  i18n %}
+
+{% block title %}
+        {% trans 'Запрашиваемый ресурс не найден' %}
+{% endblock %}
+
+{% block content %}
+    <div class="center-content">
+        <div class="center-content center-content_greeting">
+            <h2>{% trans 'Запрашиваемый ресурс не найден' %}</h2>
+        </div>
+    </div>
+{% endblock %}

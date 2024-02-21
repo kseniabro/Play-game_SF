@@ -1,0 +1,17 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Регистрация на новостной портале' %}
+{%  endblock %}
+
+{% block content %}
+    <h2>{% trans 'Регистрация на новостной портале' %}</h2>
+    <div class="center-content">
+        <form method="post" action="{% url 'app_users:register' %}">
+            {% include 'app_users/templates_for_include/login_register_form.html' %}
+            {% trans 'Зарегистрироваться' as register_trans %}
+            <button type="submit" aria-label="{{ register_trans }}" title="{{ register_trans }}">{{ register_trans }}</button>
+        </form>
+    </div>
+{% endblock %}

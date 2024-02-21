@@ -1,0 +1,24 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Модерация новости' %}
+{% endblock %}
+
+{% block content %}
+    {% trans 'Модерация новости' as moder_news_trans %}
+    {% with title_name=moder_news_trans|add:' '|add:news.title %}
+        <h2>{{ title_name }}</h2>
+
+        {% include 'app_news/templates_for_include/news_content.html' %}
+
+        <form method="post" action="{% url 'app_news:news_moderation' pk=news.id slug=news.slug %}">
+            {% include 'app_news/templates_for_include/base_news_template_form.html' %}
+
+            <div class="update-news">
+                <button type="submit" aria-label="{{ title_name }}" title="{{ title_name }}">{{ title_name }}</button>
+            </div>
+
+        </form>
+    {% endwith %}
+{% endblock %}

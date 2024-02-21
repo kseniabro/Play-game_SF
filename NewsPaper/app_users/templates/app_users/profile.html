@@ -1,0 +1,64 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% block title %}
+    {% if request.user.is_authenticated %}
+        {% trans 'Личный кабинет' %} {{ request.user.username }}
+    {% else %}
+        {% trans 'Вы еще не авторизованы' %}
+    {% endif %}
+{%  endblock %}
+
+{% block content %}
+    <div class="center-content">
+        <div class="center-content center-content_greeting">
+        {% if request.user.is_authenticated %}
+            <h2>{% trans 'Личная информация' %}</h2>
+
+            <div class="center-content center-content_with-border">
+                <a href="{% url 'app_users:change_password' %}" class="update-link update-link_dark-theme">{% trans 'Поменять пароль' %}</a>
+                {% if pass_successfully_changed %}
+                    <p>{% trans 'Пароль успешно изменен' %}</p>
+                {% endif %}
+            </div>
+
+            {% url 'app_users:update_username' pk=request.user.pk as username_update_url%}
+            {% trans 'Имя пользователя' as username_trans %}
+            {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=username_trans settings_value=request.user.username form=username_form url=username_update_url %}
+
+            {% url 'app_users:update_email' pk=request.user.profile.pk as email_update_url %}
+            {% trans 'Электронная почта' as email_trans %}
+            {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=email_trans settings_value=request.user.email form=email_form url=email_update_url %}
+
+            {% url 'app_users:update_city' pk=request.user.profile.pk as city_update_url%}
+            {% trans 'Город' as city_trans %}
+            {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=city_trans settings_value=request.user.profile.city form=city_form url=city_update_url %}
+
+            {% url 'app_users:update_telephone' pk=request.user.profile.pk as telephone_update_url%}
+            {% trans 'Номер телефона' as phone_number_trans %}
+            {% include 'app_users/templates_for_include/profile_settings_field.html' with settings_label=phone_number_trans settings_value=request.user.profile.telephone form=telephone_form url=telephone_update_url %}
+
+            <div class="center-content center-content_with-border">
+                <div class="settings-line">
+                    <p class="settings-line__item_label">{% trans 'Количество созданных новостей' %}:</p>
+                    <p class="settings-line__item_value">{{ request.user.profile.number_of_published_news }}</p>
+                    {% if request.user.profile.number_of_published_news > 0%}
+                        {% trans 'Список своих новостей' as self_news_list_trans %}
+                        <a class="update-link update-link_dark-theme" href="{% url 'app_news:personal_news_list' %}" aria-label="{{ self_news_list_trans }}" title="{{ self_news_list_trans }}">{{ self_news_list_trans }}</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="center-content">
+                {% if request.user.profile.is_verified %}
+                    {% trans 'Создать новостную сводку' as create_news_trans %}
+                    <a class="update-link update-link_dark-theme" href="{% url 'app_news:news_create'%}" aria-label="{{ create_news_trans }}" title="{{ create_news_trans }}">{{ create_news_trans }}</a>
+                {% else %}
+                    <p>{% trans 'Вам не разрешено добавлять новости, обратитесь к администратору' %}</p>
+                {% endif %}
+            </div>
+        {% else %}
+            <h2>{% trans 'Вы еще не авторизованы' %}</h2>
+        {% endif %}
+        </div>
+    </div>
+{% endblock %}

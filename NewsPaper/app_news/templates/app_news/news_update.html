@@ -1,0 +1,52 @@
+{% extends 'project_modules/index.html' %}
+{% load i18n %}
+
+{% load app_users_templatetags %}
+
+{% block title %}
+        {% trans 'Редактировать новость' %} {{ news.title }}
+{% endblock %}
+
+{% block content %}
+    {% trans 'Редактировать новость' as edit_news_trans %}
+    {% with title_name=edit_news_trans|add:' '|add:news.title %}
+        <h2>{{ title_name }}</h2>
+
+        <form method="post" action="{% url 'app_news:news_update' pk=news.id slug=news.slug %}">
+            {% include 'app_news/templates_for_include/base_news_template_form.html' %}
+
+            <div class="update-news">
+                {% if news.is_published %}
+                    <button id="change-news-confirm-button" type="button" aria-label="{{ title_name }}" title="{{ title_name }}">{{ title_name }}</button>
+                    <div class="update-news__confirm-wrap">
+                        <div class="update-news__confirm-container">
+                            <p>{% trans 'Если вы внесли изменения, после подтверждения новость станет неактивной, вы уверены что, хотите применить изменения?' %}</p>
+                            <div class="update-news__confirm-buttons">
+                                {% trans 'Да' as yes_trans %}
+                                <button type="submit" aria-label="{{ yes_trans }}" title="{{ yes_trans }}">{{ yes_trans }}</button>
+                                {% trans 'Нет' as no_trans %}
+                                <button id="change-news-confirm-button-no" type="button" aria-label="{{ no_trans }}" title="{{ no_trans }}">{{ no_trans }}</button>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <button type="submit" aria-label="{{ title_name }}" title="{{ title_name }}">{{ title_name }}</button>
+                {% endif %}
+
+                {% if request.user|is_moderator %}
+                    {% url 'app_news:news_moderate' pk=news.id slug=news.slug as news_moderate_path %}
+                    {% trans 'Модерация новости' as moder_news_trans %}
+                    <a class="update-link" href="{{ news_moderate_path }}" aria-label="{{ moder_news_trans }}" title="{{ moder_news_trans }}">{{ moder_news_trans }}</a>
+                {% endif %}
+            </div>
+        </form>
+
+        <div class="update-news">
+            <form method="post" action="{% url 'app_news:news_delete' pk=news.id slug=news.slug %}">
+
+                {% csrf_token %}
+                <button type="submit">{% trans 'Удалить новость' %}</button>
+            </form>
+        </div>
+    {% endwith %}
+{% endblock %}

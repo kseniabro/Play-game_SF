@@ -1,0 +1,50 @@
+{% load app_users_templatetags %}
+{% load i18n %}
+
+{% url 'app_news:personal_news_list' as personal_path %}
+
+<li class="object-list__item {% if not single_news.is_published %} object-list__item_without_status {% endif %}">
+    <div class="object-list__item-container">
+    {% trans 'Перейти к новости' as go_to_the_news_trans %}
+        <a class="object-list__link object-list__link_main-link" href="{% url 'app_news:news_detail' pk=single_news.id slug=single_news.slug%}" aria-label="{{ go_to_the_news_trans }} {{ single_news }}" title="{{ go_to_the_news_trans }} {{ single_news }}">
+            <span class="object-list__link-context">{{ single_news }}</span>
+
+            {% if not single_news.is_published %}
+                <span class="object-list__link-context">({% trans 'Еще не опубликована' %})</span>
+            {% endif %}
+
+
+            <div class="object-list__info">
+                <span class="object-list__link-context content-info">{% trans 'Автор' %}: {{ single_news.author }}</span>
+
+                <span class="object-list__link-context content-info">
+                    {% if single_news.is_published %}
+                        {% trans 'Дата публикации' %}: {{ single_news.published_at|date:'d E Yг. H:i' }}
+                    {% else %}
+                        {% trans 'Дата создания' %}: {{ single_news.created_at|date:'d E Yг. H:i' }}
+                    {% endif %}
+                </span>
+            </div>
+        </a>
+
+        {% if request.user == single_news.author and request.path == personal_path%}
+            <form method="post" action="{% url 'app_news:news_delete' pk=single_news.id slug=single_news.slug %}">
+                {% csrf_token %}
+                <button class="object-list__link object-list__link_edit-link" type="submit">{% trans 'Удалить новость' %}</button>
+            </form>
+        {% endif %}
+
+        {% if single_form%}
+            {{ single_form.non_field_errors }}
+            {{ single_form.id }}
+            {{ single_form.is_published.errors }}
+            <label class="object-list__status-label"> {% trans 'Статус публикации' %}&nbsp;{{ single_form.is_published }}</label>
+        {% endif %}
+        {% if request.user|is_moderator %}
+            {% trans 'Перейти к странице модерации новости' as go_to_the_news_moder_page_trans %}
+            <a class="object-list__link object-list__link_edit-link" href="{% url 'app_news:news_moderation' pk=single_news.id slug=single_news.slug%}" aria-label="{{ go_to_the_news_moder_page_trans }} {{ single_news }}" title="{{ go_to_the_news_moder_page_trans }} {{ single_news }}">
+            {% trans 'Детальная модерация' %}
+            </a>
+        {% endif %}
+    </div>
+</li>
