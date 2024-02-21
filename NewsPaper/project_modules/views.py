@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.views.generic.base import ContextMixin
 
-from app_users.permissions import user_is_moderator
+from NewsPaper.app_users.permissions import user_is_moderator
 
 
 class MainView(generic.TemplateView):
