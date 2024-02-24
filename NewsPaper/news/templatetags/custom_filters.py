@@ -1,11 +1,12 @@
 from django import template
-from better_profanity import profanity
-
 
 register = template.Library()
 
+censored_word = ["образование"]
 
-@register.filter(name='censor')
+@register.filter()
 def censor(value):
-    censored = profanity.censor(value, '$')
-    return censored
+    for word in censored_word:
+        if word.lower() in value.lower():
+            value = value.replace(word[2:], '*' * len(word))
+    return value
