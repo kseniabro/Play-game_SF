@@ -26,7 +26,7 @@ def my_job():
     html_content = render_to_string(
         'daily_post.html',
         {
-            'link': settings.SITE_URL,
+            'link': f'http://127.0.0.1:8000/subscriptions/',
             'posts': posts,
         }
     )
