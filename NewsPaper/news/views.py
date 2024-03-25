@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.template.loader import render_to_string
@@ -6,6 +7,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Group
+from django.http import HttpResponseBadRequest, HttpResponse
+from django.core.cache import cache
+from django.views import View
 
 from NewsPaper.NewsPaper import settings
 from NewsPaper.news.forms import AddPostForm
@@ -150,3 +154,14 @@ def subscribe(request, pk):
     category.subscribers.add(user)
     message = "Вы успешно подписались на рассылку новостей категории"
     return render(request, 'subscribe.html', {'category': category, 'message': message})
+
+
+class Index(View):
+    def get(self, request):
+        string = _('Hello world')
+
+        context = {
+            'string': string
+        }
+
+        return HttpResponse(render(request, 'index.html', context))
