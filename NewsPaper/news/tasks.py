@@ -1,10 +1,10 @@
 from datetime import datetime
-from celery import shared_task
+from NewsPaper.celery import shared_task
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
-from NewsPortal.models import Post, Category
-from NewsPortal.signals import post_for_subscribers
-from project import settings
+from NewsPaper.news.models import Post, Category
+from NewsPaper.news.signals import post_for_subscribers
+from NewsPaper.NewsPaper import settings
 
 
 @shared_task
